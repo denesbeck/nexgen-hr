@@ -4,7 +4,6 @@ import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
-import { Footer, Navbar } from './_components'
 
 export const metadata: Metadata = {
   title: 'NexGen HR | Home',
@@ -19,12 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="flex flex-col justify-center items-center w-screen h-screen bg-gradient-to-tr from-cyan-300 via-indigo-500 to-blue-400">
-          <Navbar />
-          <div className="flex flex-1 justify-center items-center px-8 overflow mt-[80px]">
+        <div className="flex h-full min-h-screen w-screen flex-col items-center justify-center bg-gradient-to-tr from-cyan-300 via-indigo-500 to-blue-400">
+          <div className="flex flex-1 items-start justify-center">
             {children}
           </div>
-          <Footer />
         </div>
       </body>
     </html>
