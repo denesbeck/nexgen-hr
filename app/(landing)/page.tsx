@@ -1,4 +1,4 @@
-import { Section1 } from '@/_components/home'
+import { Section1 } from '@/(landing)/_components/'
 
 export default function Home() {
   return <Section1 />
