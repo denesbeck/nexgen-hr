@@ -1,0 +1,43 @@
+[
+  {
+    "id": "comp-1-l1",
+    "name": "organization",
+    "parent": null,
+    "instances": [
+      {
+        "uuid": "org-1",
+        "name": "CIO"
+      },
+      {
+        "uuid": "org-2",
+        "name": "Finance"
+      },
+      {
+        "uuid": "org-3",
+        "name": "Sales"
+      }
+    ]
+  },
+  {
+    "id": "comp-1-l2",
+    "name": "department",
+    "parent": "comp-1-l2",
+    "instances": [
+      {
+        "uuid": "dept-1",
+        "parent": "org-1",
+        "name": "Cloud"
+      },
+      {
+        "uuid": "dept-2",
+        "parent": "org-1",
+        "name": "Security"
+      },
+      {
+        "uuid": "dept-3",
+        "parent": "org-2",
+        "name": "Invoicing"
+      }
+    ]
+  }
+]

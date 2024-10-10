@@ -1,0 +1,14 @@
+[
+  {
+    "layer": "organization",
+    "instanceId": "org-1"
+  },
+  {
+    "layer": "department",
+    "instanceId": "dept-2"
+  },
+  {
+    "layer": "business-unit",
+    "instanceId": "bu-1"
+  }
+]
