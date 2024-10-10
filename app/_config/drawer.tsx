@@ -79,12 +79,12 @@ export const NAVIGATION: Navigation = [
     icon: <PersonAddIcon />,
   },
   {
+    kind: 'divider',
+  },
+  {
     segment: 'job-portal',
     title: 'Job Portal',
     icon: <BusinessIcon />,
-  },
-  {
-    kind: 'divider',
   },
   {
     segment: 'integrations',

@@ -4,11 +4,11 @@ import { Button, RegisterCompany } from '@/_components'
 
 const Section1 = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-14 rounded-md bg-white p-14 shadow-md">
-      <h1 className="bg-gradient-to-tr from-cyan-300 via-indigo-500 to-blue-400 bg-clip-text text-4xl font-semibold text-transparent">
+    <div className="flex z-10 flex-col gap-14 justify-center items-center p-14 bg-white shadow-md rounded-[3rem]">
+      <h1 className="text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-tr from-cyan-300 via-indigo-500 to-blue-400">
         Simplicity in HR. Power in Performance.
       </h1>
-      <p className="max-w-[40rem] text-center text-xl text-slate-400">
+      <p className="text-xl text-center max-w-[40rem] text-slate-400">
         Seamless HR management designed for simplicity, driving powerful results
         and peak performance.
       </p>
@@ -19,7 +19,7 @@ const Section1 = () => {
           variant="primary-outline"
           label="Try the Demo"
           iconPosition="right"
-          icon={<IoDice className="ml-2 inline text-2xl" />}
+          icon={<IoDice className="inline ml-2 text-2xl" />}
         />
         {}
       </div>

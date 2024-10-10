@@ -10,6 +10,7 @@ interface ButtonProps {
   action: () => void
   icon?: ReactElement
   iconPosition?: 'left' | 'right'
+  wide?: boolean
 }
 
 const Button = ({
@@ -18,6 +19,7 @@ const Button = ({
   action,
   icon,
   iconPosition = 'left',
+  wide = false,
 }: ButtonProps) => {
   const VARIANTS = {
     'primary-solid': 'bg-cyan-500 text-white',
@@ -29,7 +31,7 @@ const Button = ({
   return (
     <button
       onClick={action}
-      className={`flex w-max items-center rounded-full ${VARIANTS[variant]} px-4 py-2 text-lg shadow-md transition-all duration-150 ease-in-out hover:brightness-110`}
+      className={`flex ${wide ? 'w-full' : 'w-max'} items-center justify-center rounded-full ${VARIANTS[variant]} px-4 py-2 text-lg shadow-md transition-all duration-150 ease-in-out hover:brightness-110`}
     >
       {iconPosition === 'left' && icon}
       <span>{label}</span>
