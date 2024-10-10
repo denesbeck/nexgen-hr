@@ -4,7 +4,7 @@ interface CardProps {
 
 const Card = ({ children }: CardProps) => {
   return (
-    <div className="min-h-[9rem] w-[20rem] max-w-[80vw] cursor-pointer select-none space-y-2 overflow-hidden rounded-md bg-white px-4 py-6 shadow-md transition-transform duration-200 ease-in-out hover:scale-105">
+    <div className="overflow-hidden py-6 px-4 space-y-2 bg-white rounded-md shadow-md transition-transform duration-200 ease-in-out cursor-pointer select-none hover:scale-105 min-h-[9rem] w-[20rem] max-w-[80vw] animate-slideInFromBottom">
       {children}
     </div>
   )

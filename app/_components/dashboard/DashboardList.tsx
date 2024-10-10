@@ -1,5 +1,6 @@
 import { SvgIconComponent } from '@mui/icons-material'
-import { Divider, Stack } from '@mui/material'
+import { Avatar, Divider, Stack } from '@mui/material'
+import { teal } from '@mui/material/colors'
 
 type ListItem = {
   avatar?: string
@@ -17,26 +18,39 @@ const DashboardList = ({ title, icon, list }: DashboardListProps) => {
   const Icon = icon
 
   return (
-    <div className="overflow-hidden row-span-2 py-6 px-4 space-y-2 h-full bg-white rounded-md shadow-md transition-transform duration-200 ease-in-out cursor-pointer select-none hover:scale-105 w-[20rem] max-w-[80vw] xl:min-h-[18rem]">
+    <div className="overflow-hidden row-span-2 py-6 pr-2 pl-4 space-y-2 h-full bg-white rounded-md shadow-md transition-transform duration-200 ease-in-out cursor-pointer select-none hover:scale-105 w-[20rem] max-w-[80vw] animate-slideInFromBottom xl:min-h-[18rem]">
       <div className="flex items-center space-x-4">
-        <Icon className="text-4xl text-gray-300" />
+        <Icon className="text-gray-300 min-h-10 min-w-10" />
         <p className="text-base text-sky-500">{title}</p>
       </div>
-      <Stack divider={<Divider orientation="vertical" flexItem />}>
-        {list.map((el, index) => {
-          return (
-            <div
-              key={index}
-              className="grid content-between py-3 px-2 text-sm text-gray-500 rounded border-b last:border-b-0 h-[4.5rem] border-neutral-100 hover:bg-neutral-100"
-            >
-              <p>{el.content}</p>
-              <p className="w-full text-xs text-gray-400 text-end">
-                {el.footer}
-              </p>
-            </div>
-          )
-        })}
-      </Stack>
+
+      {list.length ? (
+        <Stack
+          className="overflow-auto pr-2 max-h-[40vh]"
+          divider={<Divider orientation="vertical" flexItem />}
+        >
+          {list.map((el, index) => {
+            return (
+              <div
+                key={index}
+                className="grid content-between py-3 px-2 text-sm text-gray-500 rounded border-b last:border-b-0 h-[4.5rem] border-neutral-100 hover:bg-neutral-100"
+              >
+                <div className="flex items-center space-x-2">
+                  {el.avatar && (
+                    <Avatar sx={{ bgcolor: teal[300] }}>{el.avatar}</Avatar>
+                  )}
+                  <p className="font-black">{el.content}</p>
+                </div>
+                <p className="w-full text-xs text-gray-400 text-end">
+                  {el.footer}
+                </p>
+              </div>
+            )
+          })}
+        </Stack>
+      ) : (
+        <p className="pl-14 text-gray-400">No items to display</p>
+      )}
     </div>
   )
 }

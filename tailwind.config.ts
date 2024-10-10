@@ -84,7 +84,7 @@ const config: Config = {
       animation: {
         bounceToTheRight: 'bounceToTheRight 1s infinite',
         wobbleHorBottom: 'wobbleHorBottom 0.8s both',
-        slideInFromBottom: 'slideInFromBottom 0.15s ease-in-out',
+        slideInFromBottom: 'slideInFromBottom 0.3s ease-in-out',
         textFocus: 'textFocus 0.2s ease-in-out',
         fadeIn: 'fadeIn 0.5s ease-in-out',
       },
