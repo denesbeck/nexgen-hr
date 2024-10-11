@@ -1,25 +1,35 @@
-'use client'
+import Link from 'next/link'
+import { HamburgerMenu } from '@/_components'
 
 const Navbar = () => {
   return (
-    <nav className="flex fixed top-0 z-10 justify-around items-start py-4 px-14 w-full h-[20vh] bg-neutral-900 backdrop-blur-md">
+    <nav className="flex top-0 z-10 justify-between items-start py-4 px-8 w-full lg:justify-around xl:fixed h-[20vh] bg-neutral-900 xl:h-[40vh]">
       <div className="grid">
         <h1 className="flex items-center text-5xl font-[DepartureMono] text-sky-300">
           NexGen HR
         </h1>
-        <p className="text-white text-end">
+        <p className="text-white text-start xl:text-end">
           Where Simplicity Fuels Performance.
         </p>
       </div>
-      <ul className="flex gap-8 items-center text-lg text-sky-100">
+      <div className="block lg:hidden">
+        <HamburgerMenu />
+      </div>
+      <ul className="hidden gap-8 items-center text-lg lg:flex text-sky-100">
         <li>
-          <button className="hover:brightness-125">Pricing</button>
+          <Link href="/pricing" className="hover:text-sky-300">
+            Pricing
+          </Link>
         </li>
         <li>
-          <button className="hover:brightness-125">Docs</button>
+          <Link href="/docs" className="hover:text-sky-300">
+            Docs
+          </Link>
         </li>
         <li>
-          <button className="hover:brightness-125">About</button>
+          <Link href="/about" className="hover:text-sky-300">
+            About
+          </Link>
         </li>
       </ul>
     </nav>

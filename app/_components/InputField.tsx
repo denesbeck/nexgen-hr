@@ -37,7 +37,7 @@ const InputField = ({
   const exposeSwitch = (
     <button
       onClick={() => setIsExposed((currentState) => !currentState)}
-      className="absolute right-2 bottom-2 z-20 px-0.5 w-7 h-7 text-gray-500 rounded-full outline-none hover:bg-gray-100 focus-visible:outline-carbon-outline"
+      className="absolute right-2 bottom-2 z-20 px-0.5 w-7 h-7 text-gray-500 rounded-full outline-none hover:brightness-150 focus-visible:outline-carbon-outline"
     >
       {isExposed ? (
         <FaRegEyeSlash className="w-full h-full" />

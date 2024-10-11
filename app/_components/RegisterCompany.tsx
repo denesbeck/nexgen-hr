@@ -2,7 +2,7 @@
 import { Button } from '@/_components'
 import { RegisterCompany as RegisterCompanyForm } from '@/_components/forms'
 import { useState } from 'react'
-import { IoMdArrowDroprightCircle } from 'react-icons/io'
+import PlayCircleIcon from '@mui/icons-material/PlayCircle'
 
 const RegisterCompany = () => {
   const [open, setOpen] = useState(false)
@@ -13,7 +13,7 @@ const RegisterCompany = () => {
         variant="primary-solid"
         label="Get started"
         iconPosition="right"
-        icon={<IoMdArrowDroprightCircle className="inline ml-2 text-2xl" />}
+        icon={<PlayCircleIcon className="inline ml-2 text-2xl" />}
       />
       {open && <RegisterCompanyForm close={() => setOpen(false)} />}
     </>

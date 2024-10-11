@@ -10,6 +10,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import LayersIcon from '@mui/icons-material/Layers'
 import BusinessIcon from '@mui/icons-material/Business'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 
 import type { Navigation } from '@toolpad/core'
 import { createTheme } from '@mui/material/styles'
@@ -55,6 +56,11 @@ export const NAVIGATION: Navigation = [
     segment: 'dashboard',
     title: 'Dashboard',
     icon: <DashboardIcon />,
+  },
+  {
+    segment: 'calendars',
+    title: 'Calendars',
+    icon: <CalendarMonthIcon />,
   },
   {
     segment: 'reports',

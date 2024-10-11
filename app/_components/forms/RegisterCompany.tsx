@@ -1,7 +1,7 @@
 'use client'
 import { Backdrop, Button, InputField } from '@/_components'
-import { IoMdArrowDroprightCircle } from 'react-icons/io'
-import { FaRocket } from 'react-icons/fa'
+import PlayCircleIcon from '@mui/icons-material/PlayCircle'
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch'
 import { useClickOutside } from '@/_hooks'
 import { useState } from 'react'
 
@@ -21,8 +21,8 @@ const RegisterCompanyForm = ({ close }: RegisterCompanyFormProps) => {
         className="flex flex-col p-8 bg-white rounded-md w-[30rem] max-w-[90vw] animate-slideInFromBottom"
       >
         <div className="flex items-center space-x-3">
-          <div className="p-4 w-max bg-amber-300 rounded-full">
-            <FaRocket className="text-white min-h-6 min-w-6" />
+          <div className="p-3 w-max bg-amber-300 rounded-full">
+            <RocketLaunchIcon className="text-white min-h-8 min-w-8" />
           </div>
           <h1 className="text-2xl text-slate-800">Register Company</h1>
         </div>
@@ -47,7 +47,7 @@ const RegisterCompanyForm = ({ close }: RegisterCompanyFormProps) => {
             variant="secondary-solid"
             label="Continue"
             iconPosition="right"
-            icon={<IoMdArrowDroprightCircle className="inline ml-2 text-2xl" />}
+            icon={<PlayCircleIcon className="inline ml-2 text-2xl" />}
           />
         </div>
       </div>

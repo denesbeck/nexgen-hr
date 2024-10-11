@@ -1,3 +1,4 @@
-import Section1 from './Section1'
+import Login from './Login'
+import Promo from './Promo'
 
-export { Section1 }
+export { Login, Promo }

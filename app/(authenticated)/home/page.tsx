@@ -49,12 +49,12 @@ const PEER_VACATIONS = [
   },
   {
     avatar: 'JD',
-    content: 'Jane Doe',
-    footer: 'back on 2024-10-11',
+    content: 'Peter Parker',
+    footer: 'back on 2024-11-03',
   },
   {
     avatar: 'DB',
-    content: 'Denes Beck',
+    content: 'Bruce Wayne',
     footer: 'back on 2026-10-11',
   },
 ]

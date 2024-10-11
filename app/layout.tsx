@@ -18,10 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="flex h-full min-h-screen w-screen flex-col items-center justify-center bg-gradient-to-tr from-cyan-300 via-indigo-500 to-blue-400">
-          <div className="flex flex-1 items-start justify-center">
-            {children}
-          </div>
+        <div className="flex flex-col justify-center items-center w-screen h-full min-h-screen bg-gradient-to-tr from-cyan-300 via-indigo-500 to-blue-400">
+          {children}
         </div>
       </body>
     </html>
