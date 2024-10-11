@@ -1,19 +1,31 @@
 import Link from 'next/link'
-import { HamburgerMenu } from '@/_components'
+import { HamburgerMenu, Header } from '@/_components'
 
 const Navbar = () => {
   return (
     <nav className="flex top-0 z-10 justify-between items-start py-4 px-8 w-full lg:justify-around xl:fixed h-[20vh] bg-neutral-900 xl:h-[40vh]">
-      <div className="grid">
-        <h1 className="flex items-center text-5xl font-[DepartureMono] text-sky-300">
-          NexGen HR
-        </h1>
-        <p className="text-white text-start xl:text-end">
-          Where Simplicity Fuels Performance.
-        </p>
-      </div>
+      <Header />
       <div className="block lg:hidden">
-        <HamburgerMenu />
+        <HamburgerMenu>
+          <Link
+            href="/pricing"
+            className="text-2xl text-white transition-all duration-200 ease-in-out hover:text-4xl hover:text-sky-300"
+          >
+            Pricing
+          </Link>
+          <Link
+            href="/docs"
+            className="text-2xl text-white transition-all duration-200 ease-in-out hover:text-4xl hover:text-sky-300"
+          >
+            Docs
+          </Link>
+          <Link
+            href="/about"
+            className="text-2xl text-white transition-all duration-200 ease-in-out hover:text-4xl hover:text-sky-300"
+          >
+            About
+          </Link>
+        </HamburgerMenu>
       </div>
       <ul className="hidden gap-8 items-center text-lg lg:flex text-sky-100">
         <li>

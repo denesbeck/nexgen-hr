@@ -1,46 +1,53 @@
 'use client'
-import { createPortal } from 'react-dom'
 import MenuIcon from '@mui/icons-material/Menu'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { createPortal } from 'react-dom'
+import { Header } from '@/_components'
 
-const Menu = () => {
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => {
-    setMounted(true)
-    return () => setMounted(false)
-  }, [])
-  if (!mounted) return null
+interface MenuProps {
+  children: React.ReactNode
+  close: () => void
+}
+
+const Menu = ({ children, close }: MenuProps) => {
   return createPortal(
-    <div className="fixed top-0 left-0 z-20 w-screen h-screen animate-textFocus bg-neutral-900">
-      {' '}
-      hello
+    <div className="flex fixed top-0 left-0 z-50 flex-col gap-4 justify-center items-center w-screen h-screen bg-gradient-to-tr from-cyan-300 via-indigo-500 to-blue-400 lg:hidden animate-textFocus">
+      <div className="absolute top-4 left-8">
+        <Header />
+      </div>
+      <button
+        className="absolute top-4 right-8 p-3 rounded-full transition-all duration-200 ease-in-out rotate-90 animate-textFocus hover:backdrop-brightness-110"
+        onClick={close}
+      >
+        <MenuIcon className="text-white min-h-8 min-w-8" />
+      </button>
+      {children}
     </div>,
     document.body
   )
 }
 
-const HamburguerMenu = () => {
-  const [open, setOpen] = useState(false)
-  useEffect(() => {
-    function preventTab(e: KeyboardEvent) {
-      e = e || window.event
-      if (e.keyCode === 9) {
-        e.preventDefault()
-      }
-    }
-    document.addEventListener('keydown', preventTab)
-    return () => document.removeEventListener('keydown', preventTab)
-  }, [])
+interface HamburguerMenuProps {
+  children: React.ReactNode
+}
 
+const HamburguerMenu = ({ children }: HamburguerMenuProps) => {
+  const [open, setOpen] = useState(false)
+  const handleClick = () => {
+    setOpen((prevState) => !prevState)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
   return (
     <>
       <button
-        className={`${open && 'rotate-90'} rounded-full p-3 transition-all duration-200 ease-in-out hover:backdrop-brightness-150`}
-        onClick={() => setOpen((prevState: boolean) => !prevState)}
+        className={`${open && 'rotate-90'} relative z-50 rounded-full p-3 transition-all duration-200 ease-in-out hover:backdrop-brightness-150`}
+        onClick={handleClick}
       >
         <MenuIcon className="text-white min-h-8 min-w-8" />
       </button>
-      {open && <Menu />}
+      {open && <Menu close={handleClose}>{children}</Menu>}
     </>
   )
 }
