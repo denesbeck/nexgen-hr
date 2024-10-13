@@ -2,6 +2,7 @@
 import { Button, InputField } from '@/_components'
 import VpnKeyIcon from '@mui/icons-material/VpnKey'
 import { useState } from 'react'
+import { signInAction } from '@/_actions/auth'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -27,7 +28,7 @@ const Login = () => {
       <div className="z-10 w-[12rem]">
         <Button
           icon={<VpnKeyIcon className="mr-2" />}
-          action={() => console.log('Login')}
+          action={() => signInAction({ username: email, password })}
           variant="primary-solid"
           label="Login"
           wide={true}
