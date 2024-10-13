@@ -1,6 +1,8 @@
 'use client'
 import { ChangeEvent, useState } from 'react'
-import { FaRegEye, FaCircleNotch, FaRegEyeSlash } from 'react-icons/fa'
+import { FaCircleNotch } from 'react-icons/fa'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 
 interface InputFieldProps {
   label: string
@@ -40,9 +42,9 @@ const InputField = ({
       className="absolute right-2 bottom-2 z-20 px-0.5 w-7 h-7 text-gray-500 rounded-full outline-none hover:brightness-150 focus-visible:outline-carbon-outline"
     >
       {isExposed ? (
-        <FaRegEyeSlash className="w-full h-full" />
+        <VisibilityOffIcon className="w-full h-full" />
       ) : (
-        <FaRegEye className="w-full h-full" />
+        <VisibilityIcon className="w-full h-full" />
       )}
     </button>
   )
