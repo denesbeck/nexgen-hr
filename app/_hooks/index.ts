@@ -1,3 +1,4 @@
+import useAlert from './useAlert'
 import useClickOutside from './useClickOutside'
 
-export { useClickOutside }
+export { useAlert, useClickOutside }

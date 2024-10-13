@@ -4,6 +4,7 @@ import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
+import { AlertBox } from '@/_components'
 
 export const metadata: Metadata = {
   title: 'NexGen HR | Home',
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <AlertBox />
         <div className="flex flex-col justify-center items-center w-screen h-full min-h-screen bg-gradient-to-tr from-cyan-300 via-indigo-500 to-blue-400">
           {children}
         </div>
