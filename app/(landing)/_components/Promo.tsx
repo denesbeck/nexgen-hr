@@ -1,6 +1,6 @@
 'use client'
 import { IoDice } from 'react-icons/io5'
-import { Button, RegisterCompany } from '@/_components'
+import { Button, GetStarted } from '@/_components'
 import { useRouter } from 'next/navigation'
 
 const Promo = () => {
@@ -16,7 +16,7 @@ const Promo = () => {
         and peak performance.
       </p>
       <div className="flex gap-4 xl:mr-[8vw]">
-        <RegisterCompany />
+        <GetStarted />
         <Button
           action={() => router.push('/home?demo=true')}
           variant="primary-outline"
