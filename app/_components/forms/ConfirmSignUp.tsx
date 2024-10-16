@@ -2,21 +2,19 @@ import { Button, InputAdornment, TextField } from '@mui/material'
 import LockIcon from '@mui/icons-material/Lock'
 import { confirmSignUpAction } from '@/_actions/register'
 import { useAlert } from '@/_hooks'
+import { useContext } from 'react'
+import { RegisterCompanyContext } from '@/_contexts'
 
 interface ConfirmSignUpProps {
   email: string
-  confirmationCode: string
-  setConfirmationCode: React.Dispatch<React.SetStateAction<string>>
   close: () => void
 }
 
-const ConfirmSignUp = ({
-  email,
-  confirmationCode,
-  setConfirmationCode,
-  close,
-}: ConfirmSignUpProps) => {
+const ConfirmSignUp = ({ email, close }: ConfirmSignUpProps) => {
   const { alert } = useAlert()
+  const { confirmationCode, setConfirmationCode } = useContext(
+    RegisterCompanyContext
+  )
 
   const handleConfirmSignUp = async () => {
     const response = await confirmSignUpAction({

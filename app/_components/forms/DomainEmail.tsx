@@ -4,29 +4,24 @@ import DomainIcon from '@mui/icons-material/Domain'
 import EmailIcon from '@mui/icons-material/Email'
 import { checkIfRegistered } from '@/_actions/register'
 import { useAlert } from '@/_hooks'
+import { useContext } from 'react'
+import { RegisterCompanyContext } from '@/_contexts'
 
 interface DomainEmailProps {
-  companyName: string
-  setCompanyName: (companyName: string) => void
-  domain: string
-  setDomain: (domain: string) => void
-  rootEmail: string
-  setRootEmail: (rootEmail: string) => void
   next: () => void
-  moveToStepThree: () => void
+  skip: () => void
 }
 
-const DomainEmail = ({
-  companyName,
-  setCompanyName,
-  domain,
-  setDomain,
-  rootEmail,
-  setRootEmail,
-  next,
-  moveToStepThree,
-}: DomainEmailProps) => {
+const DomainEmail = ({ next, skip }: DomainEmailProps) => {
   const { alert } = useAlert()
+  const {
+    companyName,
+    setCompanyName,
+    domain,
+    setDomain,
+    rootEmail,
+    setRootEmail,
+  } = useContext(RegisterCompanyContext)
 
   const handleNext = async () => {
     const result = await checkIfRegistered(domain, `${rootEmail}@${domain}`)
@@ -51,7 +46,7 @@ const DomainEmail = ({
             message: 'Company already registered. Please sign in.',
           })
         } else {
-          moveToStepThree()
+          skip()
         }
       } else {
         alert({

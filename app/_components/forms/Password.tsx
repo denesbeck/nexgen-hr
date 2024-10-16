@@ -1,20 +1,21 @@
 import { Button, InputAdornment, TextField } from '@mui/material'
 import KeyIcon from '@mui/icons-material/Key'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import { useContext } from 'react'
+import { RegisterCompanyContext } from '@/_contexts'
 
-type IPassword = {
+export type IPassword = {
   password: string
   confirmPassword: string
 }
 
 interface PasswordProps {
-  password: IPassword
-  setPassword: React.Dispatch<React.SetStateAction<IPassword>>
   back: () => void
   signUp: () => void
 }
 
-const Password = ({ password, setPassword, back, signUp }: PasswordProps) => {
+const Password = ({ back, signUp }: PasswordProps) => {
+  const { password, setPassword } = useContext(RegisterCompanyContext)
   return (
     <div className="flex flex-col gap-4 animate-textFocus">
       <TextField

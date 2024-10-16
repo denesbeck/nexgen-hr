@@ -5,6 +5,7 @@ import { useClickOutside, useAlert } from '@/_hooks'
 import { useState } from 'react'
 import { signUpAction } from '@/_actions/register'
 import { ConfirmSignUp, DomainEmail, Password } from '.'
+import { RegisterCompanyContext } from '@/_contexts'
 
 interface RegisterCompanyFormProps {
   close: () => void
@@ -19,7 +20,7 @@ const RegisterCompanyForm = ({ close }: RegisterCompanyFormProps) => {
   const ref = useClickOutside<HTMLDivElement>(close, 'register-company-form')
   const { alert } = useAlert()
 
-  /*
+  /* INFO:
    * Step 1: Enter domain and root email
    * Step 2: Enter password
    * Step 3: Confirm sign up
@@ -36,7 +37,7 @@ const RegisterCompanyForm = ({ close }: RegisterCompanyFormProps) => {
   const [confirmationCode, setConfirmationCode] = useState('')
 
   const handleSignUp = async () => {
-    // input validation to be implemented
+    // TODO: input validation to be implemented here
 
     const response = await signUpAction({
       name: companyName,
@@ -75,6 +76,10 @@ const RegisterCompanyForm = ({ close }: RegisterCompanyFormProps) => {
     setStep((prev) => prev + 1)
   }
 
+  const handleSkip = () => {
+    setStep(3)
+  }
+
   return (
     <Backdrop>
       <div
@@ -93,36 +98,28 @@ const RegisterCompanyForm = ({ close }: RegisterCompanyFormProps) => {
         <p className="my-4 text-slate-400">
           Register your company to create a workspace.
         </p>
-        <div className="flex flex-col gap-4">
-          {step === 1 && (
-            <DomainEmail
-              companyName={companyName}
-              setCompanyName={setCompanyName}
-              domain={domain}
-              setDomain={setDomain}
-              rootEmail={rootEmail}
-              setRootEmail={setRootEmail}
-              next={handleNext}
-              moveToStepThree={() => setStep(3)}
-            />
-          )}
-          {step === 2 && (
-            <Password
-              password={password}
-              setPassword={setPassword}
-              back={handleBack}
-              signUp={handleSignUp}
-            />
-          )}
-          {step === 3 && (
-            <ConfirmSignUp
-              email={rootEmail + '@' + domain}
-              confirmationCode={confirmationCode}
-              setConfirmationCode={setConfirmationCode}
-              close={close}
-            />
-          )}
-        </div>
+        <RegisterCompanyContext.Provider
+          value={{
+            companyName,
+            setCompanyName,
+            domain,
+            setDomain,
+            rootEmail,
+            setRootEmail,
+            password,
+            setPassword,
+            confirmationCode,
+            setConfirmationCode,
+          }}
+        >
+          <div className="flex flex-col gap-4">
+            {step === 1 && <DomainEmail next={handleNext} skip={handleSkip} />}
+            {step === 2 && <Password back={handleBack} signUp={handleSignUp} />}
+            {step === 3 && (
+              <ConfirmSignUp email={rootEmail + '@' + domain} close={close} />
+            )}
+          </div>
+        </RegisterCompanyContext.Provider>
       </div>
     </Backdrop>
   )
