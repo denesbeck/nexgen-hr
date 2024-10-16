@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS public.companies
     domain text NOT NULL,
     root_email text NOT NULL,
     cognito_id text NOT NULL,
+    confirmed boolean NOT NULL DEFAULT false,
     created_at timestamp with time zone NOT NULL DEFAULT now(),
     updated_at timestamp with time zone NOT NULL DEFAULT now(),
     CONSTRAINT companies_pkey PRIMARY KEY (uuid)
