@@ -48,6 +48,7 @@ const MFA = ({ close }: MFAProps) => {
         </p>
         <div className="flex flex-col gap-4">
           <TextField
+            autoFocus
             label="One-Time Password"
             variant="outlined"
             value={OTP}
