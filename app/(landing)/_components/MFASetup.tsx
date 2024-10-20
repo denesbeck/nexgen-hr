@@ -1,23 +1,24 @@
 'use client'
-import { Backdrop, CloseButton } from '@/_components'
 import { Button, TextField } from '@mui/material'
-import ShieldIcon from '@mui/icons-material/Shield'
 import { useState } from 'react'
+import ShieldIcon from '@mui/icons-material/Shield'
+import QRCode from 'react-qr-code'
 import { confirmSignInAction } from '@/_actions/auth'
-import { useClickOutside } from '@/_hooks'
-import { useAlert } from '@/_hooks'
+import { useAlert, useClickOutside } from '@/_hooks'
+import { Backdrop } from '@/_components'
 
-interface MFAProps {
+interface MFASetupProps {
+  setupUri: string
   close: () => void
 }
 
-const MFA = ({ close }: MFAProps) => {
+const MFASetup = ({ setupUri }: MFASetupProps) => {
   const ref = useClickOutside<HTMLDivElement>(close, 'MFA-confirm')
   const { alert } = useAlert()
 
   const [OTP, setOTP] = useState<string>('')
 
-  const handleConfirmSingIn = async () => {
+  const handleSetupMFA = async () => {
     const res = await confirmSignInAction(OTP)
     if (res?.success === false) {
       alert({
@@ -34,19 +35,23 @@ const MFA = ({ close }: MFAProps) => {
         ref={ref}
         className="flex relative flex-col p-8 bg-white rounded-md w-[30rem] max-w-[90vw] animate-slideInFromBottom"
       >
-        <div className="absolute top-0 right-0 p-2">
-          <CloseButton close={close} size="md" />
-        </div>
         <div className="flex items-center space-x-3">
           <div className="p-3 w-max rounded-full bg-sky-300">
             <ShieldIcon className="text-white min-h-8 min-w-8" />
           </div>
-          <h1 className="text-2xl text-slate-800">MFA Confirmation</h1>
+          <h1 className="text-2xl text-slate-800">MFA Setup</h1>
         </div>
         <p className="my-4 text-slate-400">
-          Please enter your one-time password from your authenticator app.
+          Please scan the QR code above with your authenticator app and enter
+          the one-time password.
         </p>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6 items-center">
+          <div className="h-[14rem] w-[14rem]">
+            <QRCode
+              style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
+              value={setupUri as string}
+            />
+          </div>
           <TextField
             autoFocus
             label="One-Time Password"
@@ -56,20 +61,20 @@ const MFA = ({ close }: MFAProps) => {
               setOTP(event.target.value)
             }
           />
-          <div className="flex justify-end">
-            <Button
-              className="text-white"
-              color="success"
-              variant="contained"
-              onClick={handleConfirmSingIn}
-            >
-              Confirm
-            </Button>
-          </div>
+        </div>
+        <div className="flex justify-end mt-4">
+          <Button
+            className="text-white"
+            color="primary"
+            variant="contained"
+            onClick={handleSetupMFA}
+          >
+            Setup MFA
+          </Button>
         </div>
       </div>
     </Backdrop>
   )
 }
 
-export default MFA
+export default MFASetup

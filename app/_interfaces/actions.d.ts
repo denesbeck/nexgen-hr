@@ -4,5 +4,5 @@ export interface ServerActionResponse {
   success: boolean
   status?: string
   message?: string
-  payload?: AuthSession
+  payload?: AuthSession | string
 }
