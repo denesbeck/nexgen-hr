@@ -4,7 +4,7 @@ import { AppProvider } from '@toolpad/core/AppProvider'
 import { DashboardLayout } from '@toolpad/core/DashboardLayout'
 import type { Router, Session } from '@toolpad/core'
 import { useRouter, usePathname } from 'next/navigation'
-import { signOutAction } from '@/_actions/auth'
+import { getUser, signOutAction } from '@/_actions/auth'
 import { NAVIGATION, THEME } from '@/_config/drawer'
 
 interface HomeLayoutProps {
@@ -15,19 +15,20 @@ const HomeLayout = ({ children }: HomeLayoutProps) => {
   const nextRouter = useRouter()
   const pathname = usePathname()
 
-  const [session, setSession] = useState<Session | null>({
-    user: {
-      name: 'Bharat Kashyap',
-      email: 'bharatkashyap@outlook.com',
-      image: 'https://avatars.githubusercontent.com/u/19550456',
-    },
-  })
+  useEffect(() => {
+    getUser().then((user) => {
+      console.log(user)
+      setSession({ user: { ...user } })
+    })
+  }, [])
+
+  const [session, setSession] = useState<Session | null>()
 
   const authentication = useMemo(() => {
     return {
+      signIn: async () => {},
       signOut: async () => {
         await signOutAction()
-        setSession(null)
       },
     }
   }, [])

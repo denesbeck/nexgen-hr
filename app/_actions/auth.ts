@@ -123,7 +123,7 @@ export const signOutAction = async () => {
     console.error(error)
     return { success: false, status: 'SIGN_OUT_FAILED' }
   }
-  // redirect('/')
+  redirect('/')
 }
 
 const storeSession = async (
@@ -176,5 +176,32 @@ export const checkIfSessionExists = async () => {
   } catch (error) {
     console.error(error)
     return false
+  }
+}
+
+export const getUser = async () => {
+  const sessionId = getSessionId()
+
+  if (!sessionId) {
+    console.error('Session ID not found')
+    return null
+  }
+
+  try {
+    const res = await redisInstance.hgetall(
+      `session-${process.env.NODE_ENV}-${sessionId}`
+    )
+    if (!res) {
+      console.error('Session not found')
+      return null
+    }
+    return {
+      name: res.name,
+      email: res.email,
+      image: `https://api.dicebear.com/9.x/initials/svg?seed=${res.name}`,
+    }
+  } catch (error) {
+    console.error(error)
+    return null
   }
 }
