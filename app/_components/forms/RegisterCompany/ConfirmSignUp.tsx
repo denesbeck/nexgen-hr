@@ -1,6 +1,9 @@
 import { Button, InputAdornment, TextField } from '@mui/material'
 import LockIcon from '@mui/icons-material/Lock'
-import { confirmSignUpAction } from '@/_actions/register'
+import {
+  confirmSignUpAction,
+  resendSignUpCodeAction,
+} from '@/_actions/register'
 import { useAlert } from '@/_hooks'
 import { useContext } from 'react'
 import { RegisterCompanyContext } from '@/_contexts'
@@ -16,6 +19,22 @@ const ConfirmSignUp = ({ email, close }: ConfirmSignUpProps) => {
     RegisterCompanyContext
   )
 
+  const handleResendCode = async () => {
+    const response = await resendSignUpCodeAction(email)
+    if (response.success) {
+      return alert({
+        id: 'resend-code',
+        severity: 'success',
+        message: 'Confirmation code re-sent successfully!',
+      })
+    }
+    alert({
+      id: 'resend-code-fail',
+      severity: 'error',
+      message: 'Failed to resend confirmation code!',
+    })
+  }
+
   const handleConfirmSignUp = async () => {
     const response = await confirmSignUpAction({
       username: email,
@@ -23,12 +42,17 @@ const ConfirmSignUp = ({ email, close }: ConfirmSignUpProps) => {
     })
     if (response.success) {
       close()
-      alert({
+      return alert({
         id: 'sign-up-success',
         severity: 'success',
         message: 'Company registered successfully!',
       })
     }
+    alert({
+      id: 'sign-up-fail',
+      severity: 'error',
+      message: 'Failed to register company!',
+    })
   }
 
   return (
@@ -52,11 +76,7 @@ const ConfirmSignUp = ({ email, close }: ConfirmSignUpProps) => {
         }}
       />
       <div className="flex justify-end space-x-4">
-        <Button
-          color="primary"
-          variant="outlined"
-          onClick={handleConfirmSignUp}
-        >
+        <Button color="primary" variant="outlined" onClick={handleResendCode}>
           Resend Code
         </Button>
         <Button
