@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '@/_components'
+import { Button, Loading } from '@/_components'
 import VpnKeyIcon from '@mui/icons-material/VpnKey'
 import EmailIcon from '@mui/icons-material/Email'
 import KeyIcon from '@mui/icons-material/Key'
@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import { MFAConfirm, MFASetup } from '.'
 import { ServerActionResponse } from '@/_interfaces/actions'
-import { useAlert } from '@/_hooks'
+import { useAlert, useLoading } from '@/_hooks'
 
 const darkTheme = createTheme({
   palette: {
@@ -28,15 +28,15 @@ const Login = () => {
   const [MFAConfirmOpen, setMFAConfirmOpen] = useState(false)
   const [MFASetupOpen, setMFASetupOpen] = useState(false)
   const [setupUri, setSetupUri] = useState<string>('')
-  const [loading, setLoading] = useState(false)
+  const { startLoading, stopLoading } = useLoading('login')
 
   const handleSignIn = async () => {
-    setLoading(true)
+    startLoading()
     const res: ServerActionResponse | undefined = (await signInAction({
       username: email,
       password,
     })) as ServerActionResponse
-    setLoading(false)
+    stopLoading()
     // if status is ENTER_OTP, open MFAConfirm to enter OTP
     if (res?.status === 'ENTER_OTP') setMFAConfirmOpen(true)
     // if status is SETUP_OTP, open MFASetup to setup OTP
@@ -50,7 +50,6 @@ const Login = () => {
         message: res.message as string,
         severity: 'error',
       })
-      setLoading(false)
     }
   }
 
@@ -104,14 +103,15 @@ const Login = () => {
         />
       </ThemeProvider>
       <div className="z-10 w-[12rem]">
-        <Button
-          loading={loading}
-          icon={<VpnKeyIcon className="mr-2" />}
-          action={handleSignIn}
-          variant="primary-solid"
-          label="Login"
-          wide={true}
-        />
+        <Loading id="login">
+          <Button
+            icon={<VpnKeyIcon className="mr-2" />}
+            action={handleSignIn}
+            variant="primary-solid"
+            label="Login"
+            wide={true}
+          />
+        </Loading>
       </div>
     </div>
   )

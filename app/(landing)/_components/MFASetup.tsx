@@ -4,8 +4,8 @@ import { useState } from 'react'
 import ShieldIcon from '@mui/icons-material/Shield'
 import QRCode from 'react-qr-code'
 import { confirmSignInAction } from '@/_actions/auth'
-import { useAlert, useClickOutside } from '@/_hooks'
-import { Backdrop } from '@/_components'
+import { useAlert, useClickOutside, useLoading } from '@/_hooks'
+import { Backdrop, Loading } from '@/_components'
 
 interface MFASetupProps {
   setupUri: string
@@ -15,11 +15,14 @@ interface MFASetupProps {
 const MFASetup = ({ setupUri }: MFASetupProps) => {
   const ref = useClickOutside<HTMLDivElement>(close)
   const { alert } = useAlert()
+  const { startLoading, stopLoading } = useLoading('mfa-setup')
 
   const [OTP, setOTP] = useState<string>('')
 
   const handleSetupMFA = async () => {
+    startLoading()
     const res = await confirmSignInAction(OTP)
+    stopLoading()
     if (res?.success === false) {
       alert({
         id: 'otp-failed',
@@ -63,14 +66,16 @@ const MFASetup = ({ setupUri }: MFASetupProps) => {
           />
         </div>
         <div className="flex justify-end mt-4">
-          <Button
-            className="text-white"
-            color="primary"
-            variant="contained"
-            onClick={handleSetupMFA}
-          >
-            Setup MFA
-          </Button>
+          <Loading id="mfa-setup">
+            <Button
+              className="text-white"
+              color="primary"
+              variant="contained"
+              onClick={handleSetupMFA}
+            >
+              Setup MFA
+            </Button>
+          </Loading>
         </div>
       </div>
     </Backdrop>

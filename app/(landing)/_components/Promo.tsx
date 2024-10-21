@@ -1,10 +1,12 @@
 'use client'
 import { IoDice } from 'react-icons/io5'
-import { Button, GetStarted } from '@/_components'
+import { Button, GetStarted, Loading } from '@/_components'
 import { useRouter } from 'next/navigation'
+import { useLoading } from '@/_hooks'
 
 const Promo = () => {
   const router = useRouter()
+  const { startLoading } = useLoading()
 
   return (
     <div className="flex z-20 flex-col gap-14 justify-center items-center p-14 w-screen bg-white shadow-md xl:fixed xl:w-max -right-[10vw] top-[8rem] min-h-[40vh] min-w-[60vw] xl:rounded-l-[3rem]">
@@ -17,14 +19,18 @@ const Promo = () => {
       </p>
       <div className="flex gap-4 xl:mr-[8vw]">
         <GetStarted />
-        <Button
-          action={() => router.push('/home?demo=true')}
-          variant="primary-outline"
-          label="Try the Demo"
-          iconPosition="right"
-          icon={<IoDice className="inline ml-2 text-2xl" />}
-        />
-        {}
+        <Loading id="try-demo">
+          <Button
+            action={() => {
+              startLoading('try-demo')
+              router.push('/home?demo=true')
+            }}
+            variant="primary-outline"
+            label="Try the Demo"
+            iconPosition="right"
+            icon={<IoDice className="inline ml-2 text-2xl" />}
+          />
+        </Loading>
       </div>
     </div>
   )

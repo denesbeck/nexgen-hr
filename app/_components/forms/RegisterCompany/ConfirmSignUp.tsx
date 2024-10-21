@@ -4,9 +4,10 @@ import {
   confirmSignUpAction,
   resendSignUpCodeAction,
 } from '@/_actions/register'
-import { useAlert } from '@/_hooks'
+import { useAlert, useLoading } from '@/_hooks'
 import { useContext } from 'react'
 import { RegisterCompanyContext } from '@/_contexts'
+import { Loading } from '@/_components'
 
 interface ConfirmSignUpProps {
   email: string
@@ -15,12 +16,15 @@ interface ConfirmSignUpProps {
 
 const ConfirmSignUp = ({ email, close }: ConfirmSignUpProps) => {
   const { alert } = useAlert()
+  const { startLoading, stopLoading } = useLoading()
   const { confirmationCode, setConfirmationCode } = useContext(
     RegisterCompanyContext
   )
 
   const handleResendCode = async () => {
+    startLoading('resend-sign-up-code')
     const response = await resendSignUpCodeAction(email)
+    stopLoading('resend-sign-up-code')
     if (response.success) {
       return alert({
         id: 'resend-code',
@@ -36,10 +40,12 @@ const ConfirmSignUp = ({ email, close }: ConfirmSignUpProps) => {
   }
 
   const handleConfirmSignUp = async () => {
+    startLoading('confirm-sign-up')
     const response = await confirmSignUpAction({
       username: email,
       confirmationCode,
     })
+    stopLoading('confirm-sign-up')
     if (response.success) {
       close()
       return alert({
@@ -76,17 +82,21 @@ const ConfirmSignUp = ({ email, close }: ConfirmSignUpProps) => {
         }}
       />
       <div className="flex justify-end space-x-4">
-        <Button color="primary" variant="outlined" onClick={handleResendCode}>
-          Resend Code
-        </Button>
-        <Button
-          className="text-white"
-          color="success"
-          variant="contained"
-          onClick={handleConfirmSignUp}
-        >
-          Confirm
-        </Button>
+        <Loading id="resend-sign-up-code">
+          <Button color="primary" variant="outlined" onClick={handleResendCode}>
+            Resend Code
+          </Button>
+        </Loading>
+        <Loading id="confirm-sign-up">
+          <Button
+            className="text-white"
+            color="success"
+            variant="contained"
+            onClick={handleConfirmSignUp}
+          >
+            Confirm
+          </Button>
+        </Loading>
       </div>
     </div>
   )

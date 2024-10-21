@@ -3,6 +3,7 @@ import KeyIcon from '@mui/icons-material/Key'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import { useContext } from 'react'
 import { RegisterCompanyContext } from '@/_contexts'
+import { Loading } from '@/_components'
 
 export type IPassword = {
   password: string
@@ -25,7 +26,7 @@ const Password = ({ back, signUp }: PasswordProps) => {
         variant="outlined"
         value={password.password}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          setPassword((prevState) => ({
+          setPassword((prevState: IPassword) => ({
             ...prevState,
             password: event.target.value,
           }))
@@ -46,7 +47,7 @@ const Password = ({ back, signUp }: PasswordProps) => {
         variant="outlined"
         value={password.confirmPassword}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          setPassword((prevState) => ({
+          setPassword((prevState: IPassword) => ({
             ...prevState,
             confirmPassword: event.target.value,
           }))
@@ -68,14 +69,16 @@ const Password = ({ back, signUp }: PasswordProps) => {
         <Button variant="outlined" onClick={back}>
           Back
         </Button>
-        <Button
-          className="text-white"
-          color="primary"
-          variant="contained"
-          onClick={signUp}
-        >
-          Register
-        </Button>
+        <Loading id="register-company">
+          <Button
+            className="text-white"
+            color="primary"
+            variant="contained"
+            onClick={signUp}
+          >
+            Register
+          </Button>
+        </Loading>
       </div>
     </div>
   )

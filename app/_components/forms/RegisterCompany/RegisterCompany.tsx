@@ -1,7 +1,7 @@
 'use client'
 import { Backdrop, CloseButton } from '@/_components'
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch'
-import { useClickOutside, useAlert } from '@/_hooks'
+import { useClickOutside, useAlert, useLoading } from '@/_hooks'
 import { useState } from 'react'
 import { signUpAction } from '@/_actions/register'
 import { ConfirmSignUp, DomainEmail, Password } from '.'
@@ -19,6 +19,7 @@ interface RegisterCompanyFormProps {
 const RegisterCompany = ({ close }: RegisterCompanyFormProps) => {
   const ref = useClickOutside<HTMLDivElement>(close)
   const { alert } = useAlert()
+  const { startLoading, stopLoading } = useLoading('register-company')
 
   /* INFO:
    * Step 1: Enter domain and root email
@@ -39,12 +40,14 @@ const RegisterCompany = ({ close }: RegisterCompanyFormProps) => {
   const handleSignUp = async () => {
     // TODO: input validation to be implemented here
 
+    startLoading()
     const response = await signUpAction({
       name: companyName,
       domain: domain,
       username: rootEmail + '@' + domain,
       password: password.password,
     })
+    stopLoading()
 
     if (response.success) return handleNext()
 

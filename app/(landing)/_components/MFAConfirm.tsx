@@ -1,10 +1,10 @@
 'use client'
-import { Backdrop, CloseButton } from '@/_components'
+import { Backdrop, CloseButton, Loading } from '@/_components'
 import { Button, TextField } from '@mui/material'
 import ShieldIcon from '@mui/icons-material/Shield'
 import { useState } from 'react'
 import { confirmSignInAction } from '@/_actions/auth'
-import { useClickOutside } from '@/_hooks'
+import { useClickOutside, useLoading } from '@/_hooks'
 import { useAlert } from '@/_hooks'
 
 interface MFAProps {
@@ -14,11 +14,14 @@ interface MFAProps {
 const MFAConfirm = ({ close }: MFAProps) => {
   const ref = useClickOutside<HTMLDivElement>(close)
   const { alert } = useAlert()
+  const { startLoading, stopLoading } = useLoading('mfa-confirm')
 
   const [OTP, setOTP] = useState<string>('')
 
   const handleConfirmSingIn = async () => {
+    startLoading()
     const res = await confirmSignInAction(OTP)
+    stopLoading()
     if (res?.success === false) {
       alert({
         id: 'otp-failed',
@@ -57,14 +60,16 @@ const MFAConfirm = ({ close }: MFAProps) => {
             }
           />
           <div className="flex justify-end">
-            <Button
-              className="text-white"
-              color="success"
-              variant="contained"
-              onClick={handleConfirmSingIn}
-            >
-              Confirm
-            </Button>
+            <Loading id="mfa-confirm">
+              <Button
+                className="text-white"
+                color="success"
+                variant="contained"
+                onClick={handleConfirmSingIn}
+              >
+                Confirm
+              </Button>
+            </Loading>
           </div>
         </div>
       </div>

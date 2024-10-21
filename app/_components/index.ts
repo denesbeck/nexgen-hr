@@ -9,6 +9,7 @@ import Footer from './Footer'
 import GetStarted from './GetStarted'
 import HamburgerMenu from './HamburgerMenu'
 import Header from './Header'
+import Loading from './Loading'
 import Navbar from './Navbar'
 
 export {
@@ -23,5 +24,6 @@ export {
   GetStarted,
   HamburgerMenu,
   Header,
+  Loading,
   Navbar,
 }
