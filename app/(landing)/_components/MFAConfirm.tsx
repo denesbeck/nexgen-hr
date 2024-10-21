@@ -4,8 +4,7 @@ import { Button, TextField } from '@mui/material'
 import ShieldIcon from '@mui/icons-material/Shield'
 import { useState } from 'react'
 import { confirmSignInAction } from '@/_actions/auth'
-import { useClickOutside, useLoading } from '@/_hooks'
-import { useAlert } from '@/_hooks'
+import { useClickOutside, useLoading, useAlert } from '@/_hooks'
 
 interface MFAProps {
   close: () => void
