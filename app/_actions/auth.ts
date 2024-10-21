@@ -64,12 +64,11 @@ export const signInAction = async ({
       password,
     })
   } catch (error) {
-    const user = await getCurrentUser()
-    console.error(
-      `UserAlreadyAuthenticatedException: ${user.userId}. Performing sign out and sign in again.`
-    )
     // HACK: `UserAlreadyAuthenticatedException` workaround: https://github.com/aws-amplify/amplify-js/issues/13813#issuecomment-2379950784
     if ((error as Error).name === 'UserAlreadyAuthenticatedException') {
+      console.error(
+        `UserAlreadyAuthenticatedException: Performing sign out and sign in again.`
+      )
       await signOut()
       await signInAction({ username, password })
       return
