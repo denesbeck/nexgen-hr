@@ -13,7 +13,7 @@ interface MFASetupProps {
 }
 
 const MFASetup = ({ setupUri }: MFASetupProps) => {
-  const ref = useClickOutside<HTMLDivElement>(close, 'MFA-confirm')
+  const ref = useClickOutside<HTMLDivElement>(close)
   const { alert } = useAlert()
 
   const [OTP, setOTP] = useState<string>('')

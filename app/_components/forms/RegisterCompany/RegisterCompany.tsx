@@ -17,7 +17,7 @@ interface RegisterCompanyFormProps {
  * - Email validation
  *   */
 const RegisterCompany = ({ close }: RegisterCompanyFormProps) => {
-  const ref = useClickOutside<HTMLDivElement>(close, 'register-company-form')
+  const ref = useClickOutside<HTMLDivElement>(close)
   const { alert } = useAlert()
 
   /* INFO:
