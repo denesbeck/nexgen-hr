@@ -28,12 +28,15 @@ const Login = () => {
   const [MFAConfirmOpen, setMFAConfirmOpen] = useState(false)
   const [MFASetupOpen, setMFASetupOpen] = useState(false)
   const [setupUri, setSetupUri] = useState<string>('')
+  const [loading, setLoading] = useState(false)
 
   const handleSignIn = async () => {
+    setLoading(true)
     const res: ServerActionResponse | undefined = (await signInAction({
       username: email,
       password,
     })) as ServerActionResponse
+    setLoading(false)
     // if status is ENTER_OTP, open MFAConfirm to enter OTP
     if (res?.status === 'ENTER_OTP') setMFAConfirmOpen(true)
     // if status is SETUP_OTP, open MFASetup to setup OTP
@@ -41,12 +44,14 @@ const Login = () => {
       setSetupUri(res.payload as string)
       setMFASetupOpen(true)
     }
-    if (res?.success === false)
+    if (res?.success === false) {
       alert({
         id: 'login-failed',
         message: res.message as string,
         severity: 'error',
       })
+      setLoading(false)
+    }
   }
 
   return (
@@ -100,6 +105,7 @@ const Login = () => {
       </ThemeProvider>
       <div className="z-10 w-[12rem]">
         <Button
+          loading={loading}
           icon={<VpnKeyIcon className="mr-2" />}
           action={handleSignIn}
           variant="primary-solid"

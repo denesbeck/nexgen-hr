@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material'
 import { ReactElement } from 'react'
 
 interface ButtonProps {
@@ -11,6 +12,8 @@ interface ButtonProps {
   icon?: ReactElement
   iconPosition?: 'left' | 'right'
   wide?: boolean
+  loading?: boolean
+  disabled?: boolean
 }
 
 const Button = ({
@@ -20,6 +23,8 @@ const Button = ({
   icon,
   iconPosition = 'left',
   wide = false,
+  loading = false,
+  disabled = false,
 }: ButtonProps) => {
   const VARIANTS = {
     'primary-solid': 'bg-cyan-500 text-white',
@@ -29,14 +34,24 @@ const Button = ({
   }
 
   return (
-    <button
-      onClick={action}
-      className={`flex ${wide ? 'w-full' : 'w-max'} items-center justify-center rounded-full ${VARIANTS[variant]} px-4 py-2 text-lg shadow-md transition-all duration-150 ease-in-out hover:brightness-110`}
-    >
-      {iconPosition === 'left' && icon}
-      <span>{label}</span>
-      {iconPosition === 'right' && icon}
-    </button>
+    <div className="flex relative justify-center items-center">
+      <button
+        disabled={loading || disabled}
+        onClick={action}
+        className={`flex ${wide ? 'w-full' : 'w-max'} items-center justify-center rounded-full disabled:brightness-50 disabled:grayscale ${VARIANTS[variant]} px-4 py-2 text-lg shadow-md transition-all duration-150 ease-in-out enabled:hover:brightness-110`}
+      >
+        {iconPosition === 'left' && icon}
+        <span>{label}</span>
+        {iconPosition === 'right' && icon}
+      </button>
+      {loading && (
+        <CircularProgress
+          className="absolute text-blue-400"
+          size={30}
+          thickness={5}
+        />
+      )}
+    </div>
   )
 }
 
