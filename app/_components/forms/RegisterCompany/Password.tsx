@@ -19,6 +19,7 @@ const Password = ({ back, signUp }: PasswordProps) => {
   return (
     <div className="flex flex-col gap-4 animate-textFocus">
       <TextField
+        autoFocus
         label="Password"
         type="password"
         variant="outlined"

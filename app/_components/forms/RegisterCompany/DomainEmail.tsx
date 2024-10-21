@@ -62,6 +62,7 @@ const DomainEmail = ({ next, skip }: DomainEmailProps) => {
   return (
     <div className="flex flex-col gap-4 animate-textFocus">
       <TextField
+        autoFocus
         label="Name"
         variant="outlined"
         value={companyName}

@@ -16,7 +16,7 @@ interface RegisterCompanyFormProps {
  * - Domain name validation
  * - Email validation
  *   */
-const RegisterCompanyForm = ({ close }: RegisterCompanyFormProps) => {
+const RegisterCompany = ({ close }: RegisterCompanyFormProps) => {
   const ref = useClickOutside<HTMLDivElement>(close, 'register-company-form')
   const { alert } = useAlert()
 
@@ -125,4 +125,4 @@ const RegisterCompanyForm = ({ close }: RegisterCompanyFormProps) => {
   )
 }
 
-export default RegisterCompanyForm
+export default RegisterCompany

@@ -34,6 +34,7 @@ const ConfirmSignUp = ({ email, close }: ConfirmSignUpProps) => {
   return (
     <div className="flex flex-col gap-3 animate-textFocus">
       <TextField
+        autoFocus
         label="Confirmation Code"
         variant="outlined"
         value={confirmationCode}
