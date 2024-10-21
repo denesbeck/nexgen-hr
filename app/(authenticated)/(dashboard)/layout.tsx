@@ -17,7 +17,6 @@ const HomeLayout = ({ children }: HomeLayoutProps) => {
 
   useEffect(() => {
     getUser().then((user) => {
-      console.log(user)
       setSession({ user: { ...user } })
     })
   }, [])
