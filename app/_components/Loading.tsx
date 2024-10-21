@@ -27,7 +27,11 @@ const Loading = ({ id, children }: LoadingProps) => {
 
   return (
     <div className="flex relative justify-center items-center">
-      <div className={'w-full ' + (loading && 'blur-[2px] grayscale')}>
+      <div
+        className={
+          'w-full ' + (loading && 'pointer-events-none blur-[2px] grayscale')
+        }
+      >
         {children}
       </div>
       {loading && (
