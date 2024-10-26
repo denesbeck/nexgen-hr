@@ -5,21 +5,11 @@ import EmailIcon from '@mui/icons-material/Email'
 import KeyIcon from '@mui/icons-material/Key'
 import { useState } from 'react'
 import { signInAction } from '@/_actions/auth'
-import {
-  createTheme,
-  ThemeProvider,
-  InputAdornment,
-  TextField,
-} from '@mui/material'
+import { ThemeProvider, InputAdornment, TextField } from '@mui/material'
 import { MFAConfirm, MFASetup } from '.'
 import { ServerActionResponse } from '@/_interfaces/actions'
 import { useAlert, useLoading } from '@/_hooks'
-
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-})
+import { darkTheme } from '@/theme'
 
 const Login = () => {
   const { alert } = useAlert()

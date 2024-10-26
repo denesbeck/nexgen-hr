@@ -89,7 +89,6 @@ const ConfirmSignUp = ({ email, close }: ConfirmSignUpProps) => {
         </Loading>
         <Loading id="confirm-sign-up">
           <Button
-            className="text-white"
             color="success"
             variant="contained"
             onClick={handleConfirmSignUp}

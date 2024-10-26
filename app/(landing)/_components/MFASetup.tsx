@@ -68,7 +68,6 @@ const MFASetup = ({ setupUri }: MFASetupProps) => {
         <div className="flex justify-end mt-4">
           <Loading id="mfa-setup">
             <Button
-              className="text-white"
               color="primary"
               variant="contained"
               onClick={handleSetupMFA}

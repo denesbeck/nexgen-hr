@@ -117,12 +117,7 @@ const DomainEmail = ({ next, skip }: DomainEmailProps) => {
         }}
       />
       <div className="flex justify-end">
-        <Button
-          className="text-white"
-          color="primary"
-          variant="contained"
-          onClick={handleNext}
-        >
+        <Button color="primary" variant="contained" onClick={handleNext}>
           Next
         </Button>
       </div>

@@ -1,3 +1,4 @@
+import InitCompanyContext from './InitCompanyContext'
 import RegisterCompanyContext from './RegisterCompanyContext'
 
-export { RegisterCompanyContext }
+export { InitCompanyContext, RegisterCompanyContext }

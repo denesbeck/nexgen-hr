@@ -1,4 +1,4 @@
-import { IPassword } from '@/_components/forms/Password'
+import { IPassword } from '@/_components/forms/RegisterCompany/Password'
 import { createContext } from 'react'
 
 export interface RegisterCompanyContextProps {

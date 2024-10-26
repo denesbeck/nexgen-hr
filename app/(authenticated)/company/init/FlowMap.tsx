@@ -1,4 +1,5 @@
 'use client'
+import AccountTreeIcon from '@mui/icons-material/AccountTree'
 import {
   ReactFlow,
   useNodesState,
@@ -39,16 +40,26 @@ const FlowMap = () => {
     [setEdges]
   )
   return (
-    <ReactFlow
-      height={100}
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-    >
-      <Controls />
-    </ReactFlow>
+    <div className="hidden h-screen min-w-[calc(50vw-3rem)] rounded-lg bg-white p-4 shadow-md">
+      <div className="flex items-center space-x-3">
+        <div className="p-2 w-max bg-indigo-400 rounded-full">
+          <AccountTreeIcon className="text-white min-h-8 min-w-8" />
+        </div>
+        <h1 className="text-2xl text-slate-800">Flow Map</h1>
+      </div>
+      <div className="mt-4 h-[calc(100vh-104px)] rounded-md border">
+        <ReactFlow
+          height={100}
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+        >
+          <Controls />
+        </ReactFlow>
+      </div>
+    </div>
   )
 }
 

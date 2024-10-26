@@ -61,7 +61,6 @@ const MFAConfirm = ({ close }: MFAProps) => {
           <div className="flex justify-end">
             <Loading id="mfa-confirm">
               <Button
-                className="text-white"
                 color="success"
                 variant="contained"
                 onClick={handleConfirmSingIn}

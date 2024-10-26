@@ -70,12 +70,7 @@ const Password = ({ back, signUp }: PasswordProps) => {
           Back
         </Button>
         <Loading id="register-company">
-          <Button
-            className="text-white"
-            color="primary"
-            variant="contained"
-            onClick={signUp}
-          >
+          <Button color="primary" variant="contained" onClick={signUp}>
             Register
           </Button>
         </Loading>
