@@ -36,11 +36,13 @@ const InitCompanyPage = () => {
   ]
 
   return (
-    <div className="flex flex-col justify-start h-full min-h-screen">
-      <div className="flex justify-start px-8 pt-6 w-full">
+    <div className="flex relative flex-col justify-start h-full min-h-screen">
+      <div className="absolute top-0 left-0 w-full h-[60vh] bg-neutral-900 lg:h-[95vh] lg:w-[40vw] lg:rounded-br-[3rem]" />
+      <div className="absolute top-0 right-0 w-full h-[40vh] bg-neutral-900 lg:w-[70vw]" />
+      <div className="flex z-10 justify-start px-8 pt-6 w-full">
         <Header />
       </div>
-      <div className="flex flex-col gap-14 items-center p-8 w-screen lg:flex-row lg:items-start h-max">
+      <div className="flex z-10 flex-col gap-14 items-center p-8 mt-8 w-screen lg:flex-row lg:mt-0 h-[80vh]">
         <Steps steps={steps} activeStep={activeStep} />
         <InitCompanyContext.Provider
           value={{ next: handleNext, back: handleBack }}

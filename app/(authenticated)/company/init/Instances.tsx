@@ -1,14 +1,15 @@
 'use client'
 import ViewModuleIcon from '@mui/icons-material/ViewModule'
 import { Header, Info, Instance } from '.'
-import { Button } from '@mui/material'
-import { useContext } from 'react'
+import { Button, Tab, Tabs } from '@mui/material'
+import { useContext, useState } from 'react'
 import { InitCompanyContext } from '@/_contexts'
 import { ILayer } from '@/_hooks/useLayers'
 import { useInstances } from '@/_hooks'
 
 const Instances = () => {
   const { back, next } = useContext(InitCompanyContext)
+  const [tabIndex, setTabIndex] = useState(0)
   const {
     layers,
     handleAddInstance,
@@ -18,14 +19,25 @@ const Instances = () => {
   } = useInstances()
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md h-max w-[40rem] min-w-[calc(50vw-3rem)] max-w-[90vw] animate-slideInFromBottom">
+    <div className="p-8 w-screen bg-white shadow-md h-max min-w-[calc(50vw-3rem)] animate-slideInFromBottom lg:w-[40rem] lg:rounded-[3rem]">
       <Header
         title="Instances"
         icon={ViewModuleIcon}
         backgroundColor="bg-sky-300"
       />
       <Info text="You can create multiple instances of a company layer to represent different units of your company." />
-      <div className="grid gap-4 mt-4">
+      <Tabs
+        value={tabIndex}
+        onChange={(_, newValue) => setTabIndex(newValue)}
+        variant="scrollable"
+        scrollButtons
+        allowScrollButtonsMobile
+      >
+        {layers.map((layer) => (
+          <Tab key={layer.uuid} label={layer.name} />
+        ))}
+      </Tabs>
+      <div className="grid overflow-y-auto gap-8 p-2 mt-4 lg:max-h-[54vh]">
         {layers.map((layer: ILayer, layerIndex: number) => {
           const LUuid = layer.uuid
           return (
@@ -86,7 +98,7 @@ const Instances = () => {
           )
         })}
       </div>
-      <div className="flex justify-end mt-2 space-x-4 w-full">
+      <div className="flex justify-end mt-4 space-x-4 w-full">
         <Button onClick={() => back()} variant="outlined" color="primary">
           Back
         </Button>

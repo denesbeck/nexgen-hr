@@ -43,18 +43,22 @@ const Layer = ({
       </span>
       <input
         type="text"
-        className="py-1 px-1 w-full focus:outline-none"
+        className="py-1 px-1 w-full focus:outline-none min-w-[10rem]"
         placeholder="Enter a name..."
         value={value}
         maxLength={64}
         onChange={(e) => update(e.target.value)}
       />
       <div className="flex items-center space-x-2">
-        <IconButton aria-label="up" onClick={moveUp}>
-          <KeyboardArrowDownIcon className="text-gray-500 rounded-full ring-1 ring-gray-500 rotate-180" />
+        <IconButton
+          className="hidden sm:block"
+          aria-label="up"
+          onClick={moveUp}
+        >
+          <KeyboardArrowDownIcon className="hidden text-gray-500 rounded-full ring-1 ring-gray-500 rotate-180 sm:block" />
         </IconButton>
         <IconButton aria-label="down" onClick={moveDown}>
-          <KeyboardArrowDownIcon className="text-gray-500 rounded-full ring-1 ring-gray-500" />
+          <KeyboardArrowDownIcon className="hidden text-gray-500 rounded-full ring-1 ring-gray-500 sm:block" />
         </IconButton>
         <IconButton aria-label="delete">
           <DeleteIcon onClick={remove} className="text-rose-400" />
