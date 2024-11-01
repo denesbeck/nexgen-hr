@@ -19,17 +19,19 @@ const InitCompanyPage = () => {
 
   const steps = [
     {
-      label: 'Layers',
-      description: `Layers are used to model a company's organizational structure.`,
+      label: 'Define Layers',
+      description:
+        "Start by outlining the essential layers of your company's structure, setting the foundation for your blueprint.",
     },
     {
-      label: 'Instances',
+      label: 'Define Instances',
       description:
-        'You can create multiple instances of a company layer to represent different units of your company.',
+        'For each layer, specify the instances and their parent elements. This step enables you to build a hierarchical representation of your company.',
     },
     {
       label: 'Review',
-      description: 'Review the layers and instances you have created.',
+      description:
+        'Finally, review your selections to ensure they accurately reflect your company’s vision before finalizing the blueprint.',
     },
   ]
 
