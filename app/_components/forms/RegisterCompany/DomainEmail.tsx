@@ -1,6 +1,6 @@
 import { Button, InputAdornment, TextField } from '@mui/material'
-import ShortTextIcon from '@mui/icons-material/ShortText'
 import DomainIcon from '@mui/icons-material/Domain'
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import EmailIcon from '@mui/icons-material/Email'
 import { checkIfRegistered } from '@/_actions/register'
 import { useAlert } from '@/_hooks'
@@ -73,7 +73,7 @@ const DomainEmail = ({ next, skip }: DomainEmailProps) => {
           input: {
             startAdornment: (
               <InputAdornment position="start">
-                <ShortTextIcon />
+                <DomainIcon />
               </InputAdornment>
             ),
           },
@@ -90,7 +90,7 @@ const DomainEmail = ({ next, skip }: DomainEmailProps) => {
           input: {
             startAdornment: (
               <InputAdornment position="start">
-                <DomainIcon />
+                <AlternateEmailIcon />
               </InputAdornment>
             ),
           },
