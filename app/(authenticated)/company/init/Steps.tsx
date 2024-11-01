@@ -21,7 +21,7 @@ interface StepsProps {
 const Steps = ({ steps, activeStep }: StepsProps) => {
   return (
     <ThemeProvider theme={darkTheme}>
-      <div className="hidden lg:block w-[18rem] min-w-[18rem]">
+      <div className="hidden lg:block w-[20vw] min-w-[20vw]">
         <Stepper activeStep={activeStep} orientation="vertical">
           {steps.map((step) => (
             <Step key={step.label}>
