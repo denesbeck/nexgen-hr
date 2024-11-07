@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { ILayer } from './useLayers'
+import { ILayer } from '@/_hooks/useLayers'
 import { v4 as uuidv4 } from 'uuid'
+import { MAX_INSTANCES } from '@/_config/max-items'
 
 export type IInstance = {
   uuid: string
@@ -24,6 +25,7 @@ const useInstances = () => {
   const handleAddInstance = (layerUuid: string) => {
     const tmpArr = [...layers]
     const layerIndex = tmpArr.findIndex((layer) => layer.uuid === layerUuid)
+    if (tmpArr[layerIndex].instances.length >= MAX_INSTANCES) return
     tmpArr[layerIndex].instances.push({
       uuid: uuidv4(),
       name: '',

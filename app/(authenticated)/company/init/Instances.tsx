@@ -6,6 +6,7 @@ import { Button, Tab, Tabs } from '@mui/material'
 import { useContext, useState } from 'react'
 import { InitCompanyContext } from '@/_contexts'
 import { useInstances } from '@/_hooks'
+import { MAX_INSTANCES } from '@/_config/max-items'
 
 const Instances = () => {
   const { back, next } = useContext(InitCompanyContext)
@@ -20,7 +21,7 @@ const Instances = () => {
 
   if (!layers.length) return
   return (
-    <div className="p-8 w-screen bg-white shadow-md h-max min-w-[calc(50vw-3rem)] animate-slideInFromBottom lg:w-[40rem] lg:rounded-[3rem]">
+    <div className="p-8 w-screen bg-white shadow-md h-max min-w-[calc(60vw-3rem)] animate-slideInFromBottom lg:w-[40rem] lg:rounded-[3rem]">
       <Header
         title="Instances"
         icon={ViewModuleIcon}
@@ -42,6 +43,7 @@ const Instances = () => {
         <div key={layers[tabIndex].uuid} className="relative">
           <div className="flex items-center mb-2 space-x-4">
             <Button
+              disabled={layers[tabIndex].instances.length >= MAX_INSTANCES}
               color="primary"
               variant="text"
               className="flex items-center"

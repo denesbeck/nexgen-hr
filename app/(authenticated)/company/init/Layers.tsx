@@ -7,6 +7,7 @@ import { Header, Info, Layer } from '.'
 import { InitCompanyContext } from '@/_contexts'
 import { useAlert, useDndSort, useLayers, useValidate } from '@/_hooks'
 import { ILayer } from '@/_hooks/useLayers'
+import { MAX_LAYERS } from '@/_config/max-items'
 
 const Layers = () => {
   const { next } = useContext(InitCompanyContext)
@@ -50,7 +51,7 @@ const Layers = () => {
   }
 
   return (
-    <div className="p-8 w-screen bg-white shadow-md lg:w-max h-max animate-slideInFromBottom lg:min-w-[calc(50vw-3rem)] lg:rounded-[2rem]">
+    <div className="p-8 w-screen bg-white shadow-md lg:w-max h-max animate-slideInFromBottom lg:min-w-[calc(60vw-3rem)] lg:rounded-[2rem]">
       <Header
         title="Layers"
         icon={LayersIcon}
@@ -58,7 +59,12 @@ const Layers = () => {
       />
       <Info text="Layers are used to model a company's organizational structure." />
       <div className="flex justify-start my-2">
-        <Button color="primary" variant="text" onClick={handleAddLayer}>
+        <Button
+          disabled={layers.length >= MAX_LAYERS}
+          color="primary"
+          variant="text"
+          onClick={handleAddLayer}
+        >
           <AddIcon className="mr-1 text-base" />
           Add Layer
         </Button>

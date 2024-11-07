@@ -1,4 +1,5 @@
-import { IInstance } from '@/(authenticated)/company/init/Instances'
+import { MAX_LAYERS } from '@/_config/max-items'
+import { IInstance } from '@/_hooks/useInstances'
 import { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -18,6 +19,7 @@ const useLayers = () => {
   }, [])
 
   const handleAddLayer = () => {
+    if (layers.length >= MAX_LAYERS) return
     setLayers((prev) => [
       ...prev,
       {
