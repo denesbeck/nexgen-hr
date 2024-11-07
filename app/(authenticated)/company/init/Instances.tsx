@@ -1,5 +1,6 @@
 'use client'
 import ViewModuleIcon from '@mui/icons-material/ViewModule'
+import AddIcon from '@mui/icons-material/Add'
 import { Header, Info, Instance } from '.'
 import { Button, Tab, Tabs } from '@mui/material'
 import { useContext, useState } from 'react'
@@ -30,7 +31,7 @@ const Instances = () => {
         value={tabIndex}
         onChange={(_, newValue) => setTabIndex(newValue)}
         variant="scrollable"
-        scrollButtons
+        scrollButtons="auto"
         allowScrollButtonsMobile
       >
         {layers.map((layer) => (
@@ -43,8 +44,10 @@ const Instances = () => {
             <Button
               color="primary"
               variant="text"
+              className="flex items-center"
               onClick={() => handleAddInstance(layers[tabIndex].uuid)}
             >
+              <AddIcon className="mr-1 text-base" />
               Add Instance
             </Button>
             {tabIndex !== 0 && layers[tabIndex - 1].instances.length !== 0 && (
@@ -63,39 +66,45 @@ const Instances = () => {
               </>
             )}
           </div>
-          <div className="grid overflow-y-auto gap-4 p-1 lg:max-h-[35vh]">
-            {layers[tabIndex].instances.map((instance) => {
-              const IUuid = instance.uuid
+          <div className="grid overflow-y-auto gap-4 p-1 lg:max-h-[32vh]">
+            {layers[tabIndex].instances.length === 0 ? (
+              <div className="text-center text-gray-500">
+                No instances added yet
+              </div>
+            ) : (
+              layers[tabIndex].instances.map((instance) => {
+                const IUuid = instance.uuid
 
-              return (
-                <Instance
-                  key={instance.uuid}
-                  value={instance.name}
-                  parent={instance.parent}
-                  hasParent={tabIndex !== 0}
-                  parentInstances={
-                    tabIndex !== 0 ? layers[tabIndex - 1].instances : []
-                  }
-                  updateName={(value: string) =>
-                    handleUpdateInstanceName(
-                      layers[tabIndex].uuid,
-                      IUuid,
-                      value
-                    )
-                  }
-                  updateParent={(value: string | null) =>
-                    handleUpdateInstanceParent(
-                      layers[tabIndex].uuid,
-                      IUuid,
-                      value
-                    )
-                  }
-                  remove={() =>
-                    handleRemoveInstance(layers[tabIndex].uuid, IUuid)
-                  }
-                />
-              )
-            })}
+                return (
+                  <Instance
+                    key={instance.uuid}
+                    value={instance.name}
+                    parent={instance.parent}
+                    hasParent={tabIndex !== 0}
+                    parentInstances={
+                      tabIndex !== 0 ? layers[tabIndex - 1].instances : []
+                    }
+                    updateName={(value: string) =>
+                      handleUpdateInstanceName(
+                        layers[tabIndex].uuid,
+                        IUuid,
+                        value
+                      )
+                    }
+                    updateParent={(value: string | null) =>
+                      handleUpdateInstanceParent(
+                        layers[tabIndex].uuid,
+                        IUuid,
+                        value
+                      )
+                    }
+                    remove={() =>
+                      handleRemoveInstance(layers[tabIndex].uuid, IUuid)
+                    }
+                  />
+                )
+              })
+            )}
           </div>
         </div>
       </div>

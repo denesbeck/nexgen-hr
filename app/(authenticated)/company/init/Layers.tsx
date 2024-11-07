@@ -1,6 +1,7 @@
 'use client'
 import { Button } from '@mui/material'
 import LayersIcon from '@mui/icons-material/Layers'
+import AddIcon from '@mui/icons-material/Add'
 import { useContext } from 'react'
 import { Header, Info, Layer } from '.'
 import { InitCompanyContext } from '@/_contexts'
@@ -50,35 +51,44 @@ const Layers = () => {
 
   return (
     <div className="p-8 w-screen bg-white shadow-md lg:w-max h-max animate-slideInFromBottom lg:min-w-[calc(50vw-3rem)] lg:rounded-[2rem]">
-      <Header title="Layers" icon={LayersIcon} backgroundColor="bg-teal-400" />
+      <Header
+        title="Layers"
+        icon={LayersIcon}
+        backgroundColor="bg-indigo-400"
+      />
       <Info text="Layers are used to model a company's organizational structure." />
       <div className="flex justify-start my-2">
         <Button color="primary" variant="text" onClick={handleAddLayer}>
+          <AddIcon className="mr-1 text-base" />
           Add Layer
         </Button>
       </div>
-      <div className="grid overflow-y-auto gap-4 p-2 max-h-[50vh]">
+      <div className="grid overflow-y-auto gap-4 p-2 max-h-[40vh]">
         <div className="flex items-center py-1 px-4 bg-gray-100 rounded-md border-2 min-h-11">
           <span className="mr-4 text-xs text-gray-500">Layer 1:</span>
           <span className="font-semibold">Arcade Lab Inc</span>
         </div>
-        {layers.map((layer, index) => {
-          const LUuid = layer.uuid
-          return (
-            <Layer
-              key={index}
-              index={index}
-              value={layer.name}
-              update={(value) => handleUpdateLayer(LUuid, value)}
-              remove={() => handleRemoveLayer(LUuid)}
-              moveUp={() => handleMoveUp(index)}
-              moveDown={() => handleMoveDown(index)}
-              dragElem={dragElem}
-              draggedOverElem={draggedOverElem}
-              handleSort={() => handleSort(setLayers)}
-            />
-          )
-        })}
+        {layers.length === 0 ? (
+          <div className="text-center text-gray-500">No layers added yet</div>
+        ) : (
+          layers.map((layer, index) => {
+            const LUuid = layer.uuid
+            return (
+              <Layer
+                key={index}
+                index={index}
+                value={layer.name}
+                update={(value) => handleUpdateLayer(LUuid, value)}
+                remove={() => handleRemoveLayer(LUuid)}
+                moveUp={() => handleMoveUp(index)}
+                moveDown={() => handleMoveDown(index)}
+                dragElem={dragElem}
+                draggedOverElem={draggedOverElem}
+                handleSort={() => handleSort(setLayers)}
+              />
+            )
+          })
+        )}
       </div>
       <div className="flex justify-end px-2 mt-4 w-full">
         <Button

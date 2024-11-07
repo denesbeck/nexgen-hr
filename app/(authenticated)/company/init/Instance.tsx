@@ -30,7 +30,7 @@ const Instance = ({
         </span>
         <input
           type="text"
-          className="py-1 px-1 focus:outline-none w-[10rem]"
+          className="py-1 px-1 w-full focus:outline-none min-w-[10rem]"
           placeholder="Enter a name..."
           value={value}
           onChange={(e) => updateName(e.target.value)}
