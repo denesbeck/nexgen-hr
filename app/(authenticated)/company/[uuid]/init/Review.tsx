@@ -10,6 +10,10 @@ import { useContext, useEffect, useState } from 'react'
 import { Button } from '@mui/material'
 import { ILayer } from '@/_hooks/useLayers'
 import { IInstance } from '@/_hooks/useInstances'
+import { useParams } from 'next/navigation'
+import { initCompany } from '@/(authenticated)/company/[uuid]/init/actions'
+import { Loading } from '@/_components'
+import { useLoading } from '@/_hooks'
 
 const CustomTreeItem = styled(TreeItem2)(({ theme }) => ({
   color: theme.palette.grey[200],
@@ -43,9 +47,15 @@ const CustomTreeItem = styled(TreeItem2)(({ theme }) => ({
   }),
 }))
 
+interface IInstanceWithChildren extends IInstance {
+  children?: TreeViewBaseItem[]
+}
+
 const Review = () => {
-  const { back, next } = useContext(InitCompanyContext)
+  const { back } = useContext(InitCompanyContext)
   const [tree, setTree] = useState<TreeViewBaseItem[]>([])
+  const { uuid } = useParams()
+  const { startLoading, stopLoading } = useLoading('init-company')
 
   const generateTreeArrayFromLayers = (layers: ILayer[]) => {
     // get all instance objects into an array
@@ -54,7 +64,7 @@ const Review = () => {
     const treeArray: TreeViewBaseItem[] = []
     // loop through the instances array backwards
     while (instances.length > 0) {
-      const instance = instances.pop()!
+      const instance: IInstanceWithChildren = instances.pop()!
       if (instance.parent === null) {
         treeArray.unshift({
           id: instance.uuid,
@@ -63,7 +73,9 @@ const Review = () => {
         })
       }
       if (instance.parent !== null) {
-        const parent = instances.find((el) => el.uuid === instance.parent)
+        const parent: IInstanceWithChildren | undefined = instances.find(
+          (el) => el.uuid === instance.parent
+        )
         if (parent) {
           if (!parent.children) parent.children = []
           parent.children.unshift({
@@ -88,7 +100,7 @@ const Review = () => {
   }, [])
 
   return (
-    <div className="p-8 w-screen bg-white shadow-md lg:w-max h-max animate-slideInFromBottom lg:min-w-[calc(60vw-3rem)] lg:rounded-[2rem]">
+    <div className="p-8 w-screen bg-white shadow-md lg:w-max h-max animate-slideInFromBottom lg:min-w-[calc(60vw-3rem)] lg:max-w-[70vw] lg:rounded-[2rem]">
       <Header title="Review" icon={CheckIcon} backgroundColor="bg-teal-500" />
       <Info text="You can review your company's hierarchical structure. At this stage you can still edit the name of your instances in the tree view by double clicking on their labels." />
       <div className="flex gap-8 items-center mt-4">
@@ -97,6 +109,7 @@ const Review = () => {
           isItemEditable={true}
           experimentalFeatures={{ labelEditing: true }}
           onItemLabelChange={(item, value) => {
+            // TODO: update instance name
             console.log(item, value)
           }}
           // expand all
@@ -117,9 +130,23 @@ const Review = () => {
         <Button onClick={() => back()} variant="outlined" color="primary">
           Back
         </Button>
-        <Button onClick={() => next()} variant="contained" color="success">
-          Complete
-        </Button>
+        <Loading id="init-company">
+          <Button
+            onClick={async () => {
+              startLoading()
+              await initCompany({
+                uuid: uuid as string,
+                layers: localStorage.getItem('layers') || '[]',
+              })
+              localStorage.removeItem('layers')
+              stopLoading()
+            }}
+            variant="contained"
+            color="success"
+          >
+            Complete
+          </Button>
+        </Loading>
       </div>
     </div>
   )
