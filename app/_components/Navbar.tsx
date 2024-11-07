@@ -8,7 +8,7 @@ const Navbar = () => {
     { name: 'About', href: '/about' },
   ]
   return (
-    <nav className="flex top-0 z-10 justify-between items-start py-4 px-8 w-full lg:justify-around xl:fixed h-[20vh] bg-neutral-900 xl:h-[40vh]">
+    <nav className="flex top-0 z-10 justify-between items-start py-4 px-8 w-full sm:fixed lg:justify-around h-[20vh] bg-neutral-900 xl:h-[40vh]">
       <Header />
       <div className="block lg:hidden">
         <HamburgerMenu>
