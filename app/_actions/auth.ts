@@ -4,7 +4,6 @@ import {
   AuthSession,
   confirmSignIn,
   fetchAuthSession,
-  getCurrentUser,
   signIn,
   signOut,
 } from 'aws-amplify/auth'
@@ -15,6 +14,7 @@ import {
   getSessionId,
   getSessionIdAndCreateIfMissing,
 } from '@/_utils/session'
+import postgres from '@/_lib/postgres'
 
 const OUTPUTS: ResourcesConfig = {
   Auth: {
@@ -103,15 +103,38 @@ export const signInAction = async ({
 }
 
 export const confirmSignInAction = async (code: string) => {
+  const pgPool = postgres().getInstance()
+  let uuid
+  let rootEmail
   try {
     await confirmSignIn({ challengeResponse: code })
     const session = await fetchAuthSession()
-    await storeSession('Arcade Lab Inc', 'denes.beck@arcade-lab.dev', session)
+    const { rows } = await pgPool.query(
+      'SELECT uuid, name, root_email FROM companies where cognito_id = $1',
+      [session.tokens?.accessToken.payload.sub]
+    )
+    if (rows.length === 0) return { success: false, status: 'UNAUTHORIZED' }
+    /* TODO: Look for the user in the employees table if the company is not initialized. To be implemented here. Currently, we are looking for cognito_id in the companies table only. In the future, if there is no match, we should look for the cognito_id in the employees table. In that case we should not redirect to the company init page, instead an error message should be displayed.
+     */
+
+    uuid = rows[0].uuid
+    const name = rows[0].name
+    rootEmail = rows[0].root_email
+    await storeSession(uuid, name, rootEmail, session)
   } catch (error) {
     console.error(error)
     return { success: false, status: 'INVALID_OTP' }
   }
-  redirect('/home')
+  if (!uuid) return { success: false, status: 'UUID_NOT_FOUND' }
+
+  const { rows } = await pgPool.query(
+    'SELECT uuid FROM company_hierarchy WHERE company_uuid = $1',
+    [uuid]
+  )
+
+  if (rows.length === 0) return redirect(`/company/${uuid}/init`)
+
+  redirect(`/home/${uuid}`)
 }
 
 export const signOutAction = async () => {
@@ -126,12 +149,14 @@ export const signOutAction = async () => {
 }
 
 const storeSession = async (
+  uuid: string,
   name: string,
   email: string,
   authSession: AuthSession
 ) => {
   const sessionId = getSessionIdAndCreateIfMissing()
   const payload = {
+    uuid,
     name,
     email,
     authSession: JSON.stringify(authSession),
