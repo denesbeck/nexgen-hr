@@ -54,7 +54,7 @@ const Review = () => {
     const treeArray: TreeViewBaseItem[] = []
     // loop through the instances array backwards
     while (instances.length > 0) {
-      const instance = instances.pop()
+      const instance = instances.pop()!
       if (instance.parent === null) {
         treeArray.unshift({
           id: instance.uuid,

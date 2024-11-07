@@ -1,64 +1,134 @@
 'use client'
-import AccountTreeIcon from '@mui/icons-material/AccountTree'
 import {
   ReactFlow,
   useNodesState,
   useEdgesState,
-  addEdge,
   Controls,
+  Edge,
+  Panel,
+  Node,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
-import { useCallback } from 'react'
+import dagre from '@dagrejs/dagre'
 import '@xyflow/react/dist/style.css'
+import { ILayer } from '@/_hooks/useLayers'
+import { IInstance } from '@/_hooks/useInstances'
+import { Button } from '@mui/material'
 
-const initialNodes = [
-  {
-    id: '1',
-    position: { x: 0, y: 0 },
-    data: { label: 'Org:Finance' },
-  },
-  {
-    id: '2',
-    position: { x: 0, y: 0 },
-    data: { label: 'Org:Human_Resources' },
-  },
-  {
-    id: '3',
-    position: { x: 0, y: 0 },
-    data: { label: 'Org:Information Technology' },
-  },
-  { id: '4', position: { x: 0, y: 100 }, data: { label: 'Org:Sales' } },
-]
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2', type: 'step' }]
+interface IEdge {
+  id: string
+  source: string
+  target: string
+  position: string
+  type: string
+  animated: boolean
+}
 
+// get layers array from local storage
+const layers = JSON.parse(
+  typeof window !== 'undefined' ? localStorage.getItem('layers') || '[]' : '[]'
+)
+
+// get instances array from layers, flatten it
+const instances = layers.map((layer: ILayer) => layer.instances).flat()
+
+// define initial nodes and edges
+const initialNodes = instances.map((instance: IInstance) => ({
+  id: instance.uuid,
+  position: { x: 0, y: 0 },
+  data: { label: instance.name },
+}))
+const initialEdges = instances
+  .map((instance: IInstance) => {
+    if (instance.parent === null) return null
+    return {
+      id: `e-${instance.uuid}-${instance.parent}`,
+      source: instance.uuid,
+      target: instance.parent,
+      type: 'smoothstep',
+      animated: true,
+    }
+  })
+  .filter((el: IEdge) => el !== null)
+
+const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}))
+
+const nodeWidth = 172
+const nodeHeight = 36
+
+const getLayoutedElements = (nodes: Node[], edges: Edge[]) => {
+  dagreGraph.setGraph({ rankdir: 'RL', ranksep: 70, nodesep: 50 })
+
+  nodes.forEach((node) => {
+    dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight })
+  })
+
+  edges.forEach((edge) => {
+    dagreGraph.setEdge(edge.source, edge.target)
+  })
+
+  dagre.layout(dagreGraph)
+
+  const newNodes = nodes.map((node) => {
+    const nodeWithPosition = dagreGraph.node(node.id)
+    const newNode = {
+      ...node,
+      targetPosition: 'right',
+      sourcePosition: 'left',
+      position: {
+        x: nodeWithPosition.x - nodeWidth / 2,
+        y: nodeWithPosition.y - nodeHeight / 2,
+      },
+    }
+
+    return newNode
+  })
+
+  return { nodes: newNodes, edges }
+}
+
+const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+  initialNodes,
+  initialEdges
+)
+
+type LayoutedNode = Node & {
+  targetPosition: string
+  sourcePosition: string
+  position: { x: number; y: number }
+}
 const FlowMap = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
-
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
+  const [nodes, setNodes, onNodesChange] = useNodesState(
+    layoutedNodes as LayoutedNode[]
   )
+  const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges)
+
+  const resetLayout = () => {
+    const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+      nodes,
+      edges
+    )
+    setNodes([...layoutedNodes] as LayoutedNode[])
+    setEdges([...layoutedEdges])
+  }
   return (
-    <div className="hidden h-screen min-w-[calc(50vw-3rem)] rounded-lg bg-white p-4 shadow-md">
-      <div className="flex items-center space-x-3">
-        <div className="p-2 w-max bg-indigo-400 rounded-full">
-          <AccountTreeIcon className="text-white min-h-8 min-w-8" />
-        </div>
-        <h1 className="text-2xl text-slate-800">Flow Map</h1>
-      </div>
-      <div className="mt-4 h-[calc(100vh-104px)] rounded-md border">
-        <ReactFlow
-          height={100}
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-        >
-          <Controls />
-        </ReactFlow>
-      </div>
+    <div className="h-screen max-h-[50vh] w-screen min-w-[50vw] max-w-[90%] rounded-md border bg-white p-4">
+      <ReactFlow
+        height={100}
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        fitView
+        nodesConnectable={false}
+      >
+        <Panel position="top-right">
+          <Button onClick={resetLayout} size="small">
+            Reset
+          </Button>
+        </Panel>
+        <Controls />
+      </ReactFlow>
     </div>
   )
 }
