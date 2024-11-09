@@ -18,7 +18,7 @@ WIP
 ## Tech Stack 🛠️
 
 | **Category** | **Technology**       |
-| ------------ | -------------------- |
+| :----------- | :------------------- |
 | **Web**      | Next.js              |
 |              | TypeScript           |
 |              | Tailwind CSS         |
@@ -44,7 +44,7 @@ Make sure you have PostgreSQL installed on your machine. If not, you can downloa
 
 Make sure you have Redis installed on your machine. If not, you can download it [here](https://redis.io/download). The default port for Redis is 6379 on localhost. Redis is used for session management.
 
-### AWS COGNITO
+### AWS Cognito
 
 Create an AWS Cognito User Pool and Identity Pool. You can follow the instructions [here](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools.html) and [here](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-identity.html).
 
