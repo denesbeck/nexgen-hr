@@ -3,7 +3,11 @@ import { Button } from '@mui/material'
 import LayersIcon from '@mui/icons-material/Layers'
 import AddIcon from '@mui/icons-material/Add'
 import { useContext } from 'react'
-import { Header, Info, Layer } from '.'
+import {
+  Header,
+  Info,
+  Layer,
+} from '@/(authenticated)/company/[uuid]/init/_components'
 import { InitCompanyContext } from '@/_contexts'
 import { useAlert, useDndSort, useLayers, useValidate } from '@/_hooks'
 import { ILayer } from '@/_hooks/useLayers'

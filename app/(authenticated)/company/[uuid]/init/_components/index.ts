@@ -6,6 +6,7 @@ import Instances from './Instances'
 import Layer from './Layer'
 import Layers from './Layers'
 import Review from './Review'
+import StepContents from './StepContents'
 import Steps from './Steps'
 
 export {
@@ -17,5 +18,6 @@ export {
   Layer,
   Layers,
   Review,
+  StepContents,
   Steps,
 }

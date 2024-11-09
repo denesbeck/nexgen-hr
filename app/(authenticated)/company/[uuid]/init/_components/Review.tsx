@@ -1,6 +1,10 @@
 'use client'
 import CheckIcon from '@mui/icons-material/Check'
-import { FlowMap, Header, Info } from '.'
+import {
+  FlowMap,
+  Header,
+  Info,
+} from '@/(authenticated)/company/[uuid]/init/_components'
 import { styled, alpha } from '@mui/material/styles'
 import { RichTreeView } from '@mui/x-tree-view/RichTreeView'
 import { TreeItem2, treeItemClasses } from '@mui/x-tree-view'
