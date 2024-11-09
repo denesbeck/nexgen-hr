@@ -48,8 +48,8 @@ const HomeLayout = ({ children }: HomeLayoutProps) => {
       navigation={NAVIGATION}
       branding={{
         title: 'NexGen HR',
-        // eslint-disable-next-line @next/next/no-img-element
-        logo: <img src="" alt="" />,
+        // eslint-disable-next-line
+        logo: <img src={undefined} alt="" />,
       }}
       router={router}
       theme={THEME}

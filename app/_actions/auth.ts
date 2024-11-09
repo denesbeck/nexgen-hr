@@ -154,7 +154,7 @@ const storeSession = async (
   email: string,
   authSession: AuthSession
 ) => {
-  const sessionId = getSessionIdAndCreateIfMissing()
+  const sessionId = await getSessionIdAndCreateIfMissing()
   const payload = {
     uuid,
     name,
@@ -173,7 +173,7 @@ const storeSession = async (
 }
 
 const deleteSession = async () => {
-  const sessionId = getSessionId()
+  const sessionId = await getSessionId()
 
   if (!sessionId) {
     console.error('Session ID not found')
@@ -181,11 +181,11 @@ const deleteSession = async () => {
   }
 
   await redisInstance.del(`session-${process.env.NODE_ENV}-${sessionId}`)
-  deleteSessionCookie()
+  await deleteSessionCookie()
 }
 
 export const checkIfSessionExists = async () => {
-  const sessionId = getSessionId()
+  const sessionId = await getSessionId()
 
   if (!sessionId) {
     console.error('Session ID not found')
@@ -204,7 +204,7 @@ export const checkIfSessionExists = async () => {
 }
 
 export const getUser = async () => {
-  const sessionId = getSessionId()
+  const sessionId = await getSessionId()
 
   if (!sessionId) {
     console.error('Session ID not found')

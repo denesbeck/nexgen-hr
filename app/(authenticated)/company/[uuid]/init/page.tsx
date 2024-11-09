@@ -4,13 +4,13 @@ import postgres from '@/_lib/postgres'
 import { redirect } from 'next/navigation'
 
 interface InitCompanyPageProps {
-  params: {
+  params: Promise<{
     uuid: string
-  }
+  }>
 }
 
 const InitCompanyPage = async ({ params }: InitCompanyPageProps) => {
-  const uuid = params.uuid
+  const uuid = (await params).uuid
   const pgPool = postgres().getInstance()
 
   const { rows } = await pgPool.query(
