@@ -7,6 +7,7 @@ import BarChartIcon from '@mui/icons-material/BarChart'
 import PeopleIcon from '@mui/icons-material/People'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import ContactPageIcon from '@mui/icons-material/ContactPage'
 import LayersIcon from '@mui/icons-material/Layers'
 import BusinessIcon from '@mui/icons-material/Business'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
@@ -27,9 +28,14 @@ export const NAVIGATION: Navigation = [
     icon: <HomeIcon />,
   },
   {
-    segment: 'info',
-    title: 'Info',
+    segment: 'personal',
+    title: 'Personal',
     icon: <PersonIcon />,
+  },
+  {
+    segment: 'contact',
+    title: 'Contact',
+    icon: <ContactPageIcon />,
   },
   {
     segment: 'job',
