@@ -13,48 +13,12 @@ import BusinessIcon from '@mui/icons-material/Business'
 import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import DomainIcon from '@mui/icons-material/Domain'
+import RadarIcon from '@mui/icons-material/Radar'
 
 import type { Navigation } from '@toolpad/core'
 import { createTheme } from '@mui/material/styles'
 
-export const NAVIGATION: Navigation = [
-  {
-    kind: 'header',
-    title: 'Worker',
-  },
-  {
-    segment: 'home',
-    title: 'Home',
-    icon: <HomeIcon />,
-  },
-  {
-    segment: 'personal',
-    title: 'Personal',
-    icon: <PersonIcon />,
-  },
-  {
-    segment: 'contact',
-    title: 'Contact',
-    icon: <ContactPageIcon />,
-  },
-  {
-    segment: 'job',
-    title: 'Job',
-    icon: <WorkIcon />,
-  },
-  {
-    segment: 'time',
-    title: 'Time',
-    icon: <WatchLaterIcon />,
-  },
-  {
-    segment: 'compensation',
-    title: 'Compensation',
-    icon: <PaymentIcon />,
-  },
-  {
-    kind: 'divider',
-  },
+export const NAVIGATION_ADMIN: Navigation = [
   {
     kind: 'header',
     title: 'Admin',
@@ -102,7 +66,56 @@ export const NAVIGATION: Navigation = [
   {
     segment: 'job-portal',
     title: 'Job Portal',
-    icon: <BusinessIcon />,
+    icon: <RadarIcon />,
+  },
+  {
+    segment: 'integrations',
+    title: 'Integrations',
+    icon: <LayersIcon />,
+  },
+]
+export const NAVIGATION_WORKER: Navigation = [
+  {
+    kind: 'header',
+    title: 'Worker',
+  },
+  {
+    segment: 'home',
+    title: 'Home',
+    icon: <HomeIcon />,
+  },
+  {
+    segment: 'personal',
+    title: 'Personal',
+    icon: <PersonIcon />,
+  },
+  {
+    segment: 'contact',
+    title: 'Contact',
+    icon: <ContactPageIcon />,
+  },
+  {
+    segment: 'job',
+    title: 'Job',
+    icon: <WorkIcon />,
+  },
+  {
+    segment: 'time',
+    title: 'Time',
+    icon: <WatchLaterIcon />,
+  },
+  {
+    segment: 'compensation',
+    title: 'Compensation',
+    icon: <PaymentIcon />,
+  },
+  {
+    kind: 'divider',
+  },
+  {
+    segment: 'job-portal',
+    title: 'Job Portal',
+    icon: <RadarIcon />,
   },
   {
     segment: 'integrations',

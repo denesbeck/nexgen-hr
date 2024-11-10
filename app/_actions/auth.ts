@@ -108,22 +108,36 @@ export const signInAction = async ({
 export const confirmSignInAction = async (code: string) => {
   const pgPool = postgres().getInstance()
   let uuid
-  let rootEmail
+  let email
+  let role: 'admin' | 'worker' | null = null
   try {
     await confirmSignIn({ challengeResponse: code })
     const session = await fetchAuthSession()
-    const { rows } = await pgPool.query(
-      'SELECT uuid, name, root_email FROM companies where cognito_id = $1',
+    let rows
+    const { rows: rows1 } = await pgPool.query(
+      'SELECT uuid, name, root_email AS email FROM companies where cognito_id = $1',
       [session.tokens?.accessToken.payload.sub]
     )
-    if (rows.length === 0) return { success: false, status: 'UNAUTHORIZED' }
-    /* TODO: Look for the user in the employees table if the company is not initialized. To be implemented here. Currently, we are looking for cognito_id in the companies table only. In the future, if there is no match, we should look for the cognito_id in the employees table. In that case we should not redirect to the company init page, instead an error message should be displayed.
-     */
+
+    if (rows1.length === 0) {
+      const { rows: rows2 } = await pgPool.query(
+        'SELECT uuid, name, email FROM workers where cognito_id = $1',
+        [session.tokens?.accessToken.payload.sub]
+      )
+      if (rows2.length === 0) {
+        return { success: false, status: 'UUID_NOT_FOUND' }
+      }
+      rows = rows2
+      role = 'worker'
+    } else {
+      rows = rows1
+      role = 'admin'
+    }
 
     uuid = rows[0].uuid
     const name = rows[0].name
-    rootEmail = rows[0].root_email
-    await storeSession(uuid, name, rootEmail, session)
+    email = rows[0].email
+    await storeSession({ uuid, name, email, role, authSession: session })
   } catch (error) {
     console.error(error)
     return { success: false, status: 'INVALID_OTP' }
@@ -177,17 +191,20 @@ export const confirmResetPasswordAction = async (
   return { success: true, status: 'CONFIRM_RESET_PASSWORD_SUCCESS' }
 }
 
-const storeSession = async (
-  uuid: string,
-  name: string,
-  email: string,
+const storeSession = async (params: {
+  uuid: string
+  name: string
+  email: string
+  role: 'admin' | 'worker'
   authSession: AuthSession
-) => {
+}) => {
   const sessionId = await getSessionIdAndCreateIfMissing()
+  const { uuid, name, email, role, authSession } = params
   const payload = {
     uuid,
     name,
     email,
+    role,
     authSession: JSON.stringify(authSession),
   }
 
@@ -249,8 +266,10 @@ export const getUser = async () => {
       return null
     }
     return {
+      id: res.uuid,
       name: res.name,
       email: res.email,
+      role: res.role,
       image: `https://api.dicebear.com/9.x/initials/svg?seed=${res.name}`,
     }
   } catch (error) {

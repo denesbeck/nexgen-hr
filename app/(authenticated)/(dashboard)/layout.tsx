@@ -2,13 +2,26 @@
 import { useState, useMemo, useEffect } from 'react'
 import { AppProvider } from '@toolpad/core/AppProvider'
 import { DashboardLayout } from '@toolpad/core/DashboardLayout'
-import type { Router, Session } from '@toolpad/core'
+import type { Router } from '@toolpad/core'
 import { useRouter, usePathname } from 'next/navigation'
 import { getUser, signOutAction } from '@/_actions/auth'
-import { NAVIGATION, THEME } from '@/_config/drawer'
+import { NAVIGATION_ADMIN, NAVIGATION_WORKER, THEME } from '@/_config/drawer'
+import { CircularProgress } from '@mui/material'
 
 interface HomeLayoutProps {
   children: React.ReactNode
+}
+
+interface User {
+  id: string
+  name: string
+  email: string
+  role: string
+  image: string
+}
+
+interface Session {
+  user: User
 }
 
 const HomeLayout = ({ children }: HomeLayoutProps) => {
@@ -17,7 +30,7 @@ const HomeLayout = ({ children }: HomeLayoutProps) => {
 
   useEffect(() => {
     getUser().then((user) => {
-      setSession({ user: { ...user } })
+      setSession({ user: { ...(user as User) } })
     })
   }, [])
 
@@ -41,11 +54,20 @@ const HomeLayout = ({ children }: HomeLayoutProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
+  if (!session)
+    return (
+      <div className="flex flex-col justify-center items-center">
+        <CircularProgress size="3rem" />
+        <p className="mt-2 font-semibold text-white">Loading content...</p>
+      </div>
+    )
   return (
     <AppProvider
       session={session}
       authentication={authentication}
-      navigation={NAVIGATION}
+      navigation={
+        session.user.role === 'admin' ? NAVIGATION_ADMIN : NAVIGATION_WORKER
+      }
       branding={{
         title: 'NexGen HR',
         // eslint-disable-next-line
