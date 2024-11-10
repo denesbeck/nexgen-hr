@@ -135,12 +135,12 @@ const Review = () => {
           <Button
             onClick={async () => {
               startLoading()
+              const layers = localStorage.getItem('layers') || '[]'
+              localStorage.removeItem('layers')
               await initCompany({
                 uuid: uuid as string,
-                layers: localStorage.getItem('layers') || '[]',
+                layers: layers,
               })
-              localStorage.removeItem('layers')
-              stopLoading()
             }}
             variant="contained"
             color="success"
