@@ -14,7 +14,7 @@ const InitCompanyPage = async ({ params }: InitCompanyPageProps) => {
   const pgPool = postgres().getInstance()
 
   const { rows } = await pgPool.query(
-    `SELECT COUNT(1) FROM company_hierarchy where company_uuid = $1`,
+    `SELECT COUNT(1) FROM structures where company_uuid = $1`,
     [uuid]
   )
 

@@ -13,7 +13,7 @@ export const initCompany = async (payload: {
 
   try {
     await pgPool.query(
-      'INSERT INTO company_hierarchy (company_uuid, layers) VALUES ($1, $2) RETURNING *;',
+      'INSERT INTO structures (company_uuid, layers) VALUES ($1, $2) RETURNING *;',
       [uuid, layers]
     )
   } catch (error) {

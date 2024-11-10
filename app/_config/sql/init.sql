@@ -18,17 +18,17 @@ CREATE TABLE IF NOT EXISTS public.companies
 );
 
 
--- Table: public.company_hierarchy
+-- Table: public.structures
 
--- DROP TABLE IF EXISTS public.company_hierarchy;
+-- DROP TABLE IF EXISTS public.structures;
 
-CREATE TABLE IF NOT EXISTS public.company_hierarchy
+CREATE TABLE IF NOT EXISTS public.structures
 (
     uuid uuid NOT NULL DEFAULT uuid_generate_v4(),
     company_uuid uuid NOT NULL,
     layers json NOT NULL,
-    CONSTRAINT company_hierarchy_pkey PRIMARY KEY (uuid),
-    CONSTRAINT company_hierarchy_company_uuid_fkey FOREIGN KEY (company_uuid)
+    CONSTRAINT structures_pkey PRIMARY KEY (uuid),
+    CONSTRAINT structures_company_uuid_fkey FOREIGN KEY (company_uuid)
         REFERENCES public.companies (uuid) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
