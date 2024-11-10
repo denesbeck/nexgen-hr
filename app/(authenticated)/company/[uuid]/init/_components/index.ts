@@ -1,6 +1,4 @@
 import FlowMap from './FlowMap'
-import Header from './Header'
-import Info from './Info'
 import Instance from './Instance'
 import Instances from './Instances'
 import Layer from './Layer'
@@ -11,8 +9,6 @@ import Steps from './Steps'
 
 export {
   FlowMap,
-  Header,
-  Info,
   Instance,
   Instances,
   Layer,

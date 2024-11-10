@@ -1,11 +1,8 @@
 'use client'
 import ViewModuleIcon from '@mui/icons-material/ViewModule'
 import AddIcon from '@mui/icons-material/Add'
-import {
-  Header,
-  Info,
-  Instance,
-} from '@/(authenticated)/company/[uuid]/init/_components'
+import { Instance } from '.'
+import { Header, Info } from '@/_components'
 import { Button, Tab, Tabs } from '@mui/material'
 import { useContext, useState } from 'react'
 import { InitCompanyContext } from '@/_contexts'
