@@ -99,6 +99,7 @@ export const signInAction = async ({
     return { success: true, status: 'ENTER_OTP' }
   }
 
+  // INFO: Error on front-end is expected, as redirect() throws an error
   redirect('/home')
 }
 
@@ -132,7 +133,8 @@ export const confirmSignInAction = async (code: string) => {
     [uuid]
   )
 
-  if (rows.length === 0) return redirect(`/company/${uuid}/init`)
+  // INFO: Error on front-end is expected, as redirect() throws an error
+  if (rows.length === 0) redirect(`/company/${uuid}/init`)
 
   redirect(`/home/${uuid}`)
 }
@@ -145,6 +147,7 @@ export const signOutAction = async () => {
     console.error(error)
     return { success: false, status: 'SIGN_OUT_FAILED' }
   }
+  // INFO: Error on front-end is expected, as redirect() throws an error
   redirect('/')
 }
 

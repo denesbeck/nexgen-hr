@@ -8,11 +8,13 @@ export const getSessionId = async () => {
 
 const setSessionId = async (sessionId: string) => {
   const cookieStore = await cookies()
-  cookieStore.set('session-id', sessionId)
+  cookieStore.set('session-id', sessionId, {
+    sameSite: 'strict',
+  })
 }
 
 export const getSessionIdAndCreateIfMissing = async () => {
-  const sessionId = getSessionId()
+  const sessionId = await getSessionId()
   if (!sessionId) {
     const newSessionId = crypto.randomUUID()
     await setSessionId(newSessionId)
