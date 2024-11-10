@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { HamburgerMenu, Header } from '@/_components'
+import { HamburgerMenu, AppHeader } from '@/_components'
 
 const Navbar = () => {
   const ITEMS = [
@@ -9,7 +9,7 @@ const Navbar = () => {
   ]
   return (
     <nav className="flex top-0 z-10 justify-between items-start py-4 px-8 w-full sm:fixed lg:justify-around h-[20vh] bg-neutral-900 xl:h-[40vh]">
-      <Header />
+      <AppHeader />
       <div className="block lg:hidden">
         <HamburgerMenu>
           {ITEMS.map((el) => {

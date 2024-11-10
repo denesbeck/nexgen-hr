@@ -1,4 +1,5 @@
 import AlertBox from './AlertBox'
+import AppHeader from './AppHeader'
 import Backdrop from './Backdrop'
 import Button from './Button'
 import Card from './Card'
@@ -9,11 +10,13 @@ import Footer from './Footer'
 import GetStarted from './GetStarted'
 import HamburgerMenu from './HamburgerMenu'
 import Header from './Header'
+import Info from './Info'
 import Loading from './Loading'
 import Navbar from './Navbar'
 
 export {
   AlertBox,
+  AppHeader,
   Backdrop,
   Button,
   Card,
@@ -24,6 +27,7 @@ export {
   GetStarted,
   HamburgerMenu,
   Header,
+  Info,
   Loading,
   Navbar,
 }

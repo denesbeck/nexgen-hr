@@ -47,7 +47,7 @@ Amplify.configure(OUTPUTS)
 
 const redisInstance = redis().getInstance()
 
-// INFO: redirect() throws an error, therefore, it should be invoked outside of the try-catch block
+// HACK: redirect() throws an error, therefore, it should be invoked outside of the try-catch block
 
 interface SignInActionProps {
   username: string

@@ -1,5 +1,5 @@
 'use client'
-import { Backdrop, CloseButton, Loading } from '@/_components'
+import { Backdrop, CloseButton, Header, Info, Loading } from '@/_components'
 import { Button, TextField } from '@mui/material'
 import ShieldIcon from '@mui/icons-material/Shield'
 import { useState } from 'react'
@@ -39,15 +39,12 @@ const MFAConfirm = ({ close }: MFAProps) => {
         <div className="absolute top-0 right-0 p-2">
           <CloseButton close={close} size="md" />
         </div>
-        <div className="flex items-center space-x-3">
-          <div className="p-3 w-max rounded-full bg-sky-300">
-            <ShieldIcon className="text-white min-h-8 min-w-8" />
-          </div>
-          <h1 className="text-2xl text-slate-800">MFA Confirmation</h1>
-        </div>
-        <p className="my-4 text-slate-400">
-          Please enter your one-time password from your authenticator app.
-        </p>
+        <Header
+          title="MFA Confirmation"
+          icon={ShieldIcon}
+          backgroundColor="bg-sky-300"
+        />
+        <Info text="Please enter your one-time password from your authenticator app." />
         <div className="flex flex-col gap-4">
           <TextField
             autoFocus

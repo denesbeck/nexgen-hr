@@ -1,5 +1,5 @@
 'use client'
-import { Backdrop, CloseButton } from '@/_components'
+import { Backdrop, CloseButton, Header, Info } from '@/_components'
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch'
 import { useClickOutside, useAlert, useLoading } from '@/_hooks'
 import { useState } from 'react'
@@ -92,15 +92,12 @@ const RegisterCompany = ({ close }: RegisterCompanyFormProps) => {
         <div className="absolute top-0 right-0 p-2">
           <CloseButton close={close} size="md" />
         </div>
-        <div className="flex items-center space-x-3">
-          <div className="p-3 w-max bg-amber-300 rounded-full">
-            <RocketLaunchIcon className="text-white min-h-8 min-w-8" />
-          </div>
-          <h1 className="text-2xl text-slate-800">Register Company</h1>
-        </div>
-        <p className="my-4 text-slate-400">
-          Register your company to create a workspace.
-        </p>
+        <Header
+          title="Register Company"
+          icon={RocketLaunchIcon}
+          backgroundColor="bg-amber-300"
+        />
+        <Info text="Register your company to create a workspace." />
         <RegisterCompanyContext.Provider
           value={{
             companyName,

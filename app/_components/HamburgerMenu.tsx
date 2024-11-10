@@ -2,7 +2,7 @@
 import MenuIcon from '@mui/icons-material/Menu'
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Header } from '@/_components'
+import { AppHeader } from '@/_components'
 
 interface MenuProps {
   children: React.ReactNode
@@ -20,7 +20,7 @@ const Menu = ({ children, close }: MenuProps) => {
   return createPortal(
     <div className="flex fixed top-0 left-0 z-50 flex-col gap-4 justify-center items-center w-screen h-screen bg-gradient-to-tr from-cyan-300 via-indigo-500 to-blue-400 lg:hidden animate-textFocus">
       <div className="absolute top-4 left-8">
-        <Header />
+        <AppHeader />
       </div>
       <button
         className="absolute top-4 right-8 p-3 rounded-full transition-all duration-200 ease-in-out rotate-90 animate-textFocus hover:backdrop-brightness-110"
