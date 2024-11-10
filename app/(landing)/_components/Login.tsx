@@ -6,7 +6,7 @@ import KeyIcon from '@mui/icons-material/Key'
 import { useState } from 'react'
 import { signInAction } from '@/_actions/auth'
 import { ThemeProvider, InputAdornment, TextField } from '@mui/material'
-import { MFAConfirm, MFASetup } from '.'
+import { MFAConfirm, MFASetup, ResetPassword } from '.'
 import { ServerActionResponse } from '@/_interfaces/actions'
 import { useAlert, useLoading } from '@/_hooks'
 import { darkTheme } from '@/theme'
@@ -72,25 +72,28 @@ const Login = () => {
             },
           }}
         />
-        <TextField
-          label="Password"
-          type="password"
-          variant="outlined"
-          className="w-full"
-          value={password}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(() => event.target.value)
-          }
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <KeyIcon />
-                </InputAdornment>
-              ),
-            },
-          }}
-        />
+        <div className="z-10 w-full">
+          <TextField
+            label="Password"
+            type="password"
+            variant="outlined"
+            className="mb-2 w-full"
+            value={password}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(() => event.target.value)
+            }
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <KeyIcon />
+                  </InputAdornment>
+                ),
+              },
+            }}
+          />
+          <ResetPassword />
+        </div>
       </ThemeProvider>
       <div className="z-10 w-[12rem]">
         <Loading id="login">

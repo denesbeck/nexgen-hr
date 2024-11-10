@@ -6,6 +6,8 @@ import {
   fetchAuthSession,
   signIn,
   signOut,
+  resetPassword,
+  confirmResetPassword,
 } from 'aws-amplify/auth'
 import { redirect } from 'next/navigation'
 import redis from '@/_lib/redis'
@@ -149,6 +151,30 @@ export const signOutAction = async () => {
   }
   // INFO: Error on front-end is expected, as redirect() throws an error
   redirect('/')
+}
+
+export const resetPasswordAction = async (username: string) => {
+  try {
+    await resetPassword({ username })
+  } catch (error) {
+    console.error(error)
+    return { success: false, status: 'RESET_PASSWORD_FAILED' }
+  }
+  return { success: true, status: 'RESET_PASSWORD_SUCCESS' }
+}
+
+export const confirmResetPasswordAction = async (
+  confirmationCode: string,
+  newPassword: string,
+  username: string
+) => {
+  try {
+    await confirmResetPassword({ username, confirmationCode, newPassword })
+  } catch (error) {
+    console.error(error)
+    return { success: false, status: 'CONFIRM_RESET_PASSWORD_FAILED' }
+  }
+  return { success: true, status: 'CONFIRM_RESET_PASSWORD_SUCCESS' }
 }
 
 const storeSession = async (
