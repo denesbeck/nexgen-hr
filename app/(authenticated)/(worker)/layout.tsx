@@ -27,6 +27,7 @@ interface Session {
 const HomeLayout = ({ children }: HomeLayoutProps) => {
   const nextRouter = useRouter()
   const pathname = usePathname()
+  const id = pathname.split('/').pop()
 
   useEffect(() => {
     getUser().then((user) => {
@@ -49,7 +50,7 @@ const HomeLayout = ({ children }: HomeLayoutProps) => {
     return {
       pathname,
       searchParams: new URLSearchParams(),
-      navigate: (path) => nextRouter.push(String(path)),
+      navigate: (path) => nextRouter.push(String(`${path}/${id}`)),
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
