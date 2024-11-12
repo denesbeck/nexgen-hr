@@ -22,11 +22,37 @@ const MFAConfirm = ({ close }: MFAProps) => {
     const res = await confirmSignInAction(OTP)
     stopLoading()
     if (res?.success === false) {
-      alert({
-        id: 'otp-failed',
-        severity: 'error',
-        message: 'Invalid one-time password!',
-      })
+      switch (res?.status) {
+        case 'NO_STRUCTURE_NO_ADMIN':
+          alert({
+            id: 'otp-failed-no-structure-no-admin',
+            severity: 'info',
+            message:
+              'Company is not initialized yet. Please contact your administrator.',
+          })
+          break
+        case 'UUID_NOT_FOUND':
+          alert({
+            id: 'otp-failed-uuid-not-found',
+            severity: 'error',
+            message: 'Cognito integration error. Please contact support.',
+          })
+          break
+        case 'INVALID_OTP':
+          alert({
+            id: 'otp-failed',
+            severity: 'error',
+            message: 'Invalid one-time password!',
+          })
+          break
+        default:
+          alert({
+            id: 'confirm-sign-in-failed',
+            severity: 'error',
+            message: 'Something went wrong. Please try again.',
+          })
+      }
+      close()
     }
   }
 

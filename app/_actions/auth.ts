@@ -110,6 +110,7 @@ export const confirmSignInAction = async (code: string) => {
   let uuid
   let email
   let role: 'admin' | 'worker' | null = null
+  let companyUuid
   try {
     await confirmSignIn({ challengeResponse: code })
     const session = await fetchAuthSession()
@@ -121,7 +122,7 @@ export const confirmSignInAction = async (code: string) => {
 
     if (rows1.length === 0) {
       const { rows: rows2 } = await pgPool.query(
-        'SELECT uuid, name, email FROM workers where cognito_id = $1',
+        'SELECT w.uuid, w.company_uuid, pi.name, w.email FROM workers AS w JOIN personal_info AS pi ON w.uuid = pi.worker_uuid where cognito_id = $1',
         [session.tokens?.accessToken.payload.sub]
       )
       if (rows2.length === 0) {
@@ -129,9 +130,11 @@ export const confirmSignInAction = async (code: string) => {
       }
       rows = rows2
       role = 'worker'
+      companyUuid = rows2[0].company_uuid
     } else {
       rows = rows1
       role = 'admin'
+      companyUuid = rows1[0].uuid
     }
 
     uuid = rows[0].uuid
@@ -146,12 +149,16 @@ export const confirmSignInAction = async (code: string) => {
 
   const { rows } = await pgPool.query(
     'SELECT uuid FROM structures WHERE company_uuid = $1',
-    [uuid]
+    [companyUuid]
   )
 
+  if (rows.length === 0) {
+    if (role !== 'admin')
+      return { success: false, status: 'NO_STRUCTURE_NO_ADMIN' }
+    // INFO: Error on front-end is expected, as redirect() throws an error
+    redirect(`/company/${uuid}/init`)
+  }
   // INFO: Error on front-end is expected, as redirect() throws an error
-  if (rows.length === 0) redirect(`/company/${uuid}/init`)
-
   redirect(`/home/${uuid}`)
 }
 
