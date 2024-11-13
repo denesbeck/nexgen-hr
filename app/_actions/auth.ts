@@ -115,6 +115,8 @@ export const confirmSignInAction = async (code: string) => {
     await confirmSignIn({ challengeResponse: code })
     const session = await fetchAuthSession()
     let rows
+
+    // TODO: Consider refactoring this to differentiate postgres error from other errors
     const { rows: rows1 } = await pgPool.query(
       'SELECT uuid, name, root_email AS email FROM companies where cognito_id = $1',
       [session.tokens?.accessToken.payload.sub]
@@ -122,7 +124,7 @@ export const confirmSignInAction = async (code: string) => {
 
     if (rows1.length === 0) {
       const { rows: rows2 } = await pgPool.query(
-        'SELECT w.uuid, w.company_uuid, pi.name, w.email FROM workers AS w JOIN personal_info AS pi ON w.uuid = pi.worker_uuid where cognito_id = $1',
+        'SELECT w.uuid, w.company_uuid, p.name, w.email FROM workers AS w JOIN personal AS p ON w.uuid = p.worker_uuid where cognito_id = $1',
         [session.tokens?.accessToken.payload.sub]
       )
       if (rows2.length === 0) {
