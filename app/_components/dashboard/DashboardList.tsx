@@ -1,3 +1,4 @@
+'use client'
 import { SvgIconComponent } from '@mui/icons-material'
 import { Avatar, Divider, Stack } from '@mui/material'
 import { teal } from '@mui/material/colors'
