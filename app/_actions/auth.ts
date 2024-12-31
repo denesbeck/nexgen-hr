@@ -150,7 +150,7 @@ export const confirmSignInAction = async (code: string) => {
   if (!uuid) return { success: false, status: 'UUID_NOT_FOUND' }
 
   const { rows } = await pgPool.query(
-    'SELECT uuid FROM structures WHERE company_uuid = $1',
+    'SELECT uuid FROM company_structures WHERE company_uuid = $1',
     [companyUuid]
   )
 
