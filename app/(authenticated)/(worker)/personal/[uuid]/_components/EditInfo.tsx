@@ -1,7 +1,6 @@
 'use client'
-import { Button, ThemeProvider } from '@mui/material'
+import { Button } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
-import { theme } from '@/theme'
 
 interface IEditInfo {
   uuid: string
@@ -10,9 +9,9 @@ interface IEditInfo {
 const EditInfo = ({ uuid }: IEditInfo) => {
   return (
     <Button
-      variant="outlined"
-      color="secondary"
-      className="flex space-x-1"
+      variant="text"
+      color="primary"
+      className="flex items-center space-x-1"
       onClick={() => console.log(uuid)}
     >
       <EditIcon className="w-4 h-4" />

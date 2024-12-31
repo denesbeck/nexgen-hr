@@ -10,7 +10,7 @@ const DeleteDocument = ({ uuid }: IDeleteDocument) => {
   return (
     <IconButton
       aria-label="delete-document"
-      color="error"
+      color="info"
       onClick={() => console.log('Delete', uuid)}
       size="medium"
     >

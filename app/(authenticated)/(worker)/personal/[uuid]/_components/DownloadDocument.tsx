@@ -10,8 +10,8 @@ const DownloadDocument = ({ uuid }: IDownloadDocument) => {
   return (
     <IconButton
       aria-label="download-document"
-      color="success"
-      onClick={() => console.log('Delete', uuid)}
+      color="info"
+      onClick={() => console.log('Download', uuid)}
       size="medium"
     >
       <CloudDownloadIcon />

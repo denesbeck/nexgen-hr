@@ -1,6 +1,6 @@
 import { Header } from '@/_components'
 import PersonIcon from '@mui/icons-material/Person'
-import { Document, EditInfo, InfoRow } from './_components'
+import { AddDocument, Document, EditInfo, InfoRow } from './_components'
 import postgres from '@/_lib/postgres'
 import { getUser } from '@/_actions/auth'
 import { theme } from '@/theme'
@@ -47,7 +47,7 @@ const Personal = async ({ params }: IPersonal) => {
           <Header
             title="Personal"
             icon={PersonIcon}
-            backgroundColor="bg-amber-300"
+            backgroundColor="bg-indigo-300"
           />
           <EditInfo uuid="personal" />
         </div>
@@ -69,8 +69,8 @@ const Personal = async ({ params }: IPersonal) => {
                 label: 'Gender',
                 value: gender,
               },
-              { label: 'City of Birth', value: city_of_birth },
               { label: 'Country of Birth', value: country_of_birth },
+              { label: 'City of Birth', value: city_of_birth },
               { label: 'Marital status', value: marital_status },
               { label: 'Citizenship', value: citizenship.join(', ') },
               { label: 'Nationality', value: nationality },
@@ -79,7 +79,11 @@ const Personal = async ({ params }: IPersonal) => {
             ))}
           </div>
           <div className="flex flex-col">
-            <h1 className="mb-4 font-bold">Documents</h1>
+            <div className="flex justify-between items-center mb-4">
+              <h1 className="font-bold">Documents</h1>
+              <AddDocument />
+            </div>
+
             <div className="grid gap-4">
               <Document type="Identity Card" id="00000000000" />
               <Document type="Social Security Number" id="00000000000" />
