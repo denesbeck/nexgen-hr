@@ -1,7 +1,7 @@
 'use client'
-import { Backdrop, CloseButton, Header, Info } from '@/_components'
+import { Header, Info, Modal } from '@/_components'
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch'
-import { useClickOutside, useAlert, useLoading } from '@/_hooks'
+import { useAlert, useLoading } from '@/_hooks'
 import { useState } from 'react'
 import { signUpAction } from '@/_actions/register'
 import { ConfirmSignUp, DomainEmail, Password } from '.'
@@ -17,7 +17,6 @@ interface RegisterCompanyFormProps {
  * - Email validation
  *   */
 const RegisterCompany = ({ close }: RegisterCompanyFormProps) => {
-  const ref = useClickOutside<HTMLDivElement>(close)
   const { alert } = useAlert()
   const { startLoading, stopLoading } = useLoading('register-company')
 
@@ -84,44 +83,36 @@ const RegisterCompany = ({ close }: RegisterCompanyFormProps) => {
   }
 
   return (
-    <Backdrop>
-      <div
-        ref={ref}
-        className="flex relative flex-col p-8 bg-white rounded-md w-[30rem] max-w-[90vw] animate-slideInFromBottom"
+    <Modal close={close}>
+      <Header
+        title="Register Company"
+        icon={RocketLaunchIcon}
+        backgroundColor="bg-amber-300"
+      />
+      <Info text="Register your company to create a workspace." />
+      <RegisterCompanyContext.Provider
+        value={{
+          companyName,
+          setCompanyName,
+          domain,
+          setDomain,
+          rootEmail,
+          setRootEmail,
+          password,
+          setPassword,
+          confirmationCode,
+          setConfirmationCode,
+        }}
       >
-        <div className="absolute top-0 right-0 p-2">
-          <CloseButton close={close} size="md" />
+        <div className="flex flex-col gap-4">
+          {step === 1 && <DomainEmail next={handleNext} skip={handleSkip} />}
+          {step === 2 && <Password back={handleBack} signUp={handleSignUp} />}
+          {step === 3 && (
+            <ConfirmSignUp email={rootEmail + '@' + domain} close={close} />
+          )}
         </div>
-        <Header
-          title="Register Company"
-          icon={RocketLaunchIcon}
-          backgroundColor="bg-amber-300"
-        />
-        <Info text="Register your company to create a workspace." />
-        <RegisterCompanyContext.Provider
-          value={{
-            companyName,
-            setCompanyName,
-            domain,
-            setDomain,
-            rootEmail,
-            setRootEmail,
-            password,
-            setPassword,
-            confirmationCode,
-            setConfirmationCode,
-          }}
-        >
-          <div className="flex flex-col gap-4">
-            {step === 1 && <DomainEmail next={handleNext} skip={handleSkip} />}
-            {step === 2 && <Password back={handleBack} signUp={handleSignUp} />}
-            {step === 3 && (
-              <ConfirmSignUp email={rootEmail + '@' + domain} close={close} />
-            )}
-          </div>
-        </RegisterCompanyContext.Provider>
-      </div>
-    </Backdrop>
+      </RegisterCompanyContext.Provider>
+    </Modal>
   )
 }
 

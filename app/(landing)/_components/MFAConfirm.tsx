@@ -1,17 +1,16 @@
 'use client'
-import { Backdrop, CloseButton, Header, Info, Loading } from '@/_components'
+import { Header, Info, Loading, Modal } from '@/_components'
 import { Button, TextField } from '@mui/material'
 import ShieldIcon from '@mui/icons-material/Shield'
 import { useState } from 'react'
 import { confirmSignInAction } from '@/_actions/auth'
-import { useClickOutside, useLoading, useAlert } from '@/_hooks'
+import { useLoading, useAlert } from '@/_hooks'
 
 interface MFAProps {
   close: () => void
 }
 
 const MFAConfirm = ({ close }: MFAProps) => {
-  const ref = useClickOutside<HTMLDivElement>(close)
   const { alert } = useAlert()
   const { startLoading, stopLoading } = useLoading('mfa-confirm')
 
@@ -57,44 +56,36 @@ const MFAConfirm = ({ close }: MFAProps) => {
   }
 
   return (
-    <Backdrop>
-      <div
-        ref={ref}
-        className="flex relative flex-col p-8 bg-white rounded-md w-[30rem] max-w-[90vw] animate-slideInFromBottom"
-      >
-        <div className="absolute top-0 right-0 p-2">
-          <CloseButton close={close} size="md" />
-        </div>
-        <Header
-          title="MFA Confirmation"
-          icon={ShieldIcon}
-          backgroundColor="bg-sky-300"
+    <Modal close={close}>
+      <Header
+        title="MFA Confirmation"
+        icon={ShieldIcon}
+        backgroundColor="bg-sky-300"
+      />
+      <Info text="Please enter your one-time password from your authenticator app." />
+      <div className="flex flex-col gap-4">
+        <TextField
+          autoFocus
+          label="One-Time Password"
+          variant="outlined"
+          value={OTP}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setOTP(event.target.value)
+          }
         />
-        <Info text="Please enter your one-time password from your authenticator app." />
-        <div className="flex flex-col gap-4">
-          <TextField
-            autoFocus
-            label="One-Time Password"
-            variant="outlined"
-            value={OTP}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setOTP(event.target.value)
-            }
-          />
-          <div className="flex justify-end">
-            <Loading id="mfa-confirm">
-              <Button
-                color="success"
-                variant="contained"
-                onClick={handleConfirmSingIn}
-              >
-                Confirm
-              </Button>
-            </Loading>
-          </div>
+        <div className="flex justify-end">
+          <Loading id="mfa-confirm">
+            <Button
+              color="success"
+              variant="contained"
+              onClick={handleConfirmSingIn}
+            >
+              Confirm
+            </Button>
+          </Loading>
         </div>
       </div>
-    </Backdrop>
+    </Modal>
   )
 }
 
