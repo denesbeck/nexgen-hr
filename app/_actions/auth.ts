@@ -94,7 +94,11 @@ export const signInAction = async ({
     const getSetupUri = response?.nextStep?.totpSetupDetails?.getSetupUri
     const appName = 'NexGen HR'
     const setupUri = getSetupUri(appName)
-    return { success: true, status: 'SETUP_OTP', payload: setupUri }
+    return {
+      success: true,
+      status: 'SETUP_OTP',
+      payload: JSON.stringify(setupUri),
+    }
   }
 
   if (isSignedIn === false && signInStep === 'CONFIRM_SIGN_IN_WITH_TOTP_CODE') {

@@ -32,7 +32,7 @@ const Login = () => {
     if (res?.status === 'ENTER_OTP') setMFAConfirmOpen(true)
     // if status is SETUP_OTP, open MFASetup to setup OTP
     if (res?.status === 'SETUP_OTP') {
-      setSetupUri(res.payload as string)
+      setSetupUri(JSON.parse(res.payload as string))
       setMFASetupOpen(true)
     }
     if (res?.success === false) {
