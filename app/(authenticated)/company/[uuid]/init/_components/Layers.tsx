@@ -2,16 +2,29 @@
 import { Button } from '@mui/material'
 import LayersIcon from '@mui/icons-material/Layers'
 import AddIcon from '@mui/icons-material/Add'
-import { useContext } from 'react'
+import { use, useContext, useEffect, useState } from 'react'
 import { Layer } from '.'
 import { Header, Info } from '@/_components'
 import { InitCompanyContext } from '@/_contexts'
 import { useAlert, useDndSort, useLayers, useValidate } from '@/_hooks'
 import { ILayer } from '@/_hooks/useLayers'
 import { MAX_LAYERS } from '@/_config/max-items'
+import { getCompanyName } from '../actions'
+import { useParams } from 'next/navigation'
 
 const Layers = () => {
+  const { uuid } = useParams()
+
   const { next } = useContext(InitCompanyContext)
+  const [companyName, setCompanyName] = useState('Loading...')
+
+  useEffect(() => {
+    getCompanyName(uuid as string).then((res) => {
+      if (res.success) return setCompanyName(res.name)
+      setCompanyName('Error fetching company name')
+    })
+  }, [uuid])
+
   const {
     layers,
     setLayers,
@@ -64,16 +77,17 @@ const Layers = () => {
           disabled={layers.length >= MAX_LAYERS}
           color="primary"
           variant="text"
+          className="flex items-center space-x-1"
           onClick={handleAddLayer}
         >
-          <AddIcon className="mr-1 text-base" />
-          Add Layer
+          <AddIcon className="w-5 h-5 max-h-5 max-w-5" />
+          <span>Add Layer</span>
         </Button>
       </div>
       <div className="grid overflow-y-auto gap-4 p-2 max-h-[40vh]">
         <div className="flex items-center py-1 px-4 bg-gray-100 rounded-md border-2 min-h-11">
           <span className="mr-4 text-xs text-gray-500">Layer 1:</span>
-          <span className="font-semibold">Arcade Lab Inc</span>
+          <span className="font-semibold">{companyName}</span>
         </div>
         {layers.length === 0 ? (
           <div className="text-center text-gray-500">No layers added yet</div>
