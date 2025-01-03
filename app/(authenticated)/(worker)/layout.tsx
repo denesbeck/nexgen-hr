@@ -7,21 +7,10 @@ import { useRouter, usePathname } from 'next/navigation'
 import { getUser, signOutAction } from '@/_actions/auth'
 import { NAVIGATION_ADMIN, NAVIGATION_WORKER, THEME } from '@/_config/drawer'
 import { CircularProgress } from '@mui/material'
+import { Session, User } from '@/_interfaces/session'
 
 interface HomeLayoutProps {
   children: React.ReactNode
-}
-
-interface User {
-  id: string
-  name: string
-  email: string
-  role: string
-  image: string
-}
-
-interface Session {
-  user: User
 }
 
 const HomeLayout = ({ children }: HomeLayoutProps) => {

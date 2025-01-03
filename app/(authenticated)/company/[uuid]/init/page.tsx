@@ -1,4 +1,4 @@
-import { AppHeader } from '@/_components'
+import { Account, AppHeader } from '@/_components'
 import { StepContents } from '@/(authenticated)/company/[uuid]/init/_components'
 import postgres from '@/_lib/postgres'
 import { redirect } from 'next/navigation'
@@ -22,6 +22,9 @@ const InitCompanyPage = async ({ params }: InitCompanyPageProps) => {
 
   return (
     <div className="flex relative flex-col justify-start h-full min-h-screen">
+      <div className="absolute top-5 right-5 z-[1300]">
+        <Account />
+      </div>
       <div className="absolute top-0 left-0 w-full h-[60vh] bg-neutral-900 lg:h-[95vh] lg:w-[40vw] lg:rounded-br-[3rem]" />
       <div className="absolute top-0 right-0 w-full h-[40vh] bg-neutral-900 lg:w-[70vw]" />
       <div className="flex z-10 justify-start px-8 pt-6 w-full">

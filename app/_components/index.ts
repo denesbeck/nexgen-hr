@@ -1,3 +1,4 @@
+import Account from './Account'
 import AlertBox from './AlertBox'
 import AppHeader from './AppHeader'
 import Backdrop from './Backdrop'
@@ -17,6 +18,7 @@ import Modal from './Modal'
 import Navbar from './Navbar'
 
 export {
+  Account,
   AlertBox,
   AppHeader,
   Backdrop,
