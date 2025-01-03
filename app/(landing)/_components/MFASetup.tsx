@@ -12,7 +12,7 @@ interface MFASetupProps {
   close: () => void
 }
 
-const MFASetup = ({ setupUri }: MFASetupProps) => {
+const MFASetup = ({ setupUri, close }: MFASetupProps) => {
   const { alert } = useAlert()
   const { startLoading, stopLoading } = useLoading('mfa-setup')
 
