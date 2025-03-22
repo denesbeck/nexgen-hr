@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS public.documents
     worker_uuid uuid NOT NULL,
     type text NOT NULL,
     id text NOT NULL,
-    s3_arn NOT NULL,
+    s3_arn text NOT NULL,
     created_at timestamp with time zone NOT NULL DEFAULT now(),
     updated_at timestamp with time zone NOT NULL DEFAULT now(),
     CONSTRAINT documents_pkey PRIMARY KEY (uuid)
