@@ -45,17 +45,18 @@ const Login = () => {
   }
 
   return (
-    <div className="flex relative z-10 flex-col gap-8 justify-center items-center p-8 from-cyan-300 via-indigo-500 to-blue-400 shadow-md xl:fixed xl:bg-linear-to-tr xl:rounded-md xl:bottom-[20vh] xl:left-[7vw] xl:w-[28.5rem]">
+    <div className="flex relative z-10 flex-col gap-8 justify-center items-center p-8 from-cyan-300 via-indigo-500 to-blue-400 shadow-md xl:fixed xl:rounded-md xl:bottom-[20vh] xl:left-[7vw] xl:w-[28.5rem] xl:bg-linear-to-tr">
       {MFAConfirmOpen && <MFAConfirm close={() => setMFAConfirmOpen(false)} />}
       {MFASetupOpen && (
         <MFASetup setupUri={setupUri} close={() => setMFASetupOpen(false)} />
       )}
-      <div className="absolute h-full w-screen bg-neutral-900 xl:left-1 xl:top-1 xl:h-[calc(100%-0.5rem)] xl:w-[calc(100%-0.5rem)] xl:rounded-md"></div>
-      <h1 className="z-10 text-4xl font-semibold text-transparent bg-clip-text bg-linear-to-tr from-cyan-300 via-indigo-500 to-blue-400">
+      <div className="absolute h-full w-screen bg-neutral-900 xl:top-1 xl:left-1 xl:h-[calc(100%-0.5rem)] xl:w-[calc(100%-0.5rem)] xl:rounded-md"></div>
+      <h1 className="z-10 text-4xl font-semibold text-transparent bg-clip-text from-cyan-300 via-indigo-500 to-blue-400 bg-linear-to-tr">
         Welcome to NexGen HR
       </h1>
       <ThemeProvider theme={darkTheme}>
         <TextField
+          suppressHydrationWarning={true}
           label="Email"
           variant="outlined"
           className="w-full"
