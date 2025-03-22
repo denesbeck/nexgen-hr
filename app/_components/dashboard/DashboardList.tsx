@@ -34,7 +34,7 @@ const DashboardList = ({ title, icon, list }: DashboardListProps) => {
             return (
               <div
                 key={index}
-                className="grid content-between py-3 px-2 text-sm text-gray-500 rounded border-b last:border-b-0 h-[4.5rem] border-neutral-100 hover:bg-neutral-100"
+                className="grid content-between py-3 px-2 text-sm text-gray-500 rounded-sm border-b last:border-b-0 h-[4.5rem] border-neutral-100 hover:bg-neutral-100"
               >
                 <div className="flex items-center space-x-2">
                   {el.avatar && (

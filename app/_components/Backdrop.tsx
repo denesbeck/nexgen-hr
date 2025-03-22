@@ -17,7 +17,7 @@ const Backdrop = ({ children, id }: BackdropProps) => {
   return createPortal(
     <div
       id={id}
-      className="flex overflow-y-auto fixed top-0 left-0 justify-center items-center py-8 w-screen h-screen z-[1350] bg-slate-900/80 backdrop-blur-sm"
+      className="flex overflow-y-auto fixed top-0 left-0 justify-center items-center py-8 w-screen h-screen z-1350 bg-slate-900/80 backdrop-blur-xs"
     >
       {children}
     </div>,

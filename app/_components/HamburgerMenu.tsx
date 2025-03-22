@@ -18,7 +18,7 @@ const Menu = ({ children, close }: MenuProps) => {
   }, [])
 
   return createPortal(
-    <div className="flex fixed top-0 left-0 z-50 flex-col gap-4 justify-center items-center w-screen h-screen bg-gradient-to-tr from-cyan-300 via-indigo-500 to-blue-400 lg:hidden animate-textFocus">
+    <div className="flex fixed top-0 left-0 z-50 flex-col gap-4 justify-center items-center w-screen h-screen bg-linear-to-tr from-cyan-300 via-indigo-500 to-blue-400 lg:hidden animate-textFocus">
       <div className="absolute top-4 left-8">
         <AppHeader />
       </div>

@@ -1,6 +1,103 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --animate-bounce-to-the-right: bounceToTheRight 1s infinite;
+  --animate-wobble-hor-bottom: wobbleHorBottom 0.8s both;
+  --animate-slide-in-from-bottom: slideInFromBottom 0.3s ease-in-out;
+  --animate-text-focus: textFocus 0.2s ease-in-out;
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+
+  @keyframes wobbleHorBottom {
+    0%,
+    100% {
+      transform: translateX(0%);
+      transform-origin: 50% 50%;
+    }
+    15% {
+      transform: translateX(-5px) rotate(-3deg);
+    }
+    30% {
+      transform: translateX(2.5px) rotate(3deg);
+    }
+    45% {
+      transform: translateX(-2.5px) rotate(-1.6deg);
+    }
+    60% {
+      transform: translateX(1px) rotate(1.4deg);
+    }
+    75% {
+      transform: translateX(-1px) rotate(-0.2deg);
+    }
+  }
+  @keyframes bounceToTheRight {
+    0%,
+    100% {
+      transform: translateX(-25%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: translateX(0);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(2rem);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0rem);
+      opacity: 1;
+    }
+  }
+  @keyframes textFocus {
+    0% {
+      filter: blur(12px);
+      opacity: 0;
+    }
+    100% {
+      filter: blur(0px);
+      opacity: 1;
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes jumpingDots {
+    10% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 @font-face {
   font-family: 'DepartureMono';

@@ -23,7 +23,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider theme={theme}>
           <AlertBox />
-          <main className="flex flex-col justify-center items-center w-screen h-full min-h-screen bg-gradient-to-tr from-cyan-300 via-indigo-500 to-blue-400">
+          <main className="flex flex-col justify-center items-center w-screen h-full min-h-screen bg-linear-to-tr from-cyan-300 via-indigo-500 to-blue-400">
             {children}
           </main>
         </ThemeProvider>

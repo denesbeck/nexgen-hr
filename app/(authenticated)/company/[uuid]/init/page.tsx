@@ -22,7 +22,7 @@ const InitCompanyPage = async ({ params }: InitCompanyPageProps) => {
 
   return (
     <div className="flex relative flex-col justify-start h-full min-h-screen">
-      <div className="absolute top-5 right-5 z-[1300]">
+      <div className="absolute top-5 right-5 z-1300">
         <Account />
       </div>
       <div className="absolute top-0 left-0 w-full h-[60vh] bg-neutral-900 lg:h-[95vh] lg:w-[40vw] lg:rounded-br-[3rem]" />
